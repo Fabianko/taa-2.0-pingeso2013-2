@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="/templates/newTemplate.xhtml">
+
+            <ui:define name="titulo">
+                titulo
+            </ui:define>
+
+            <ui:define name="right">
+                right
+            </ui:define>
+
+            <ui:define name="content">
+
+                <h:form id="form">  
+                    <p:dataTable var="alumnos" value="#{studentRegister.studentFacade.findAll()}">  
+                        <p:column headerText="RUT">  
+                            <h:outputText value="#{alumnos.rut}" />  
+                        </p:column>  
+
+                        <p:column headerText="NOMBRE">  
+                            <h:outputText value="#{alumnos.user.firstName}" />  
+                        </p:column>  
+
+                        <p:column headerText="APELLIDO PATERNO">  
+                            <h:outputText value="#{alumnos.user.primaryLastName}" />  
+                        </p:column>  
+
+                        <p:column headerText="APELLIDO MATERNO">  
+                            <h:outputText value="#{alumnos.user.secondLastName}" />  
+                        </p:column>  
+                        
+                        <p:column headerText="">  
+                            <p:selectCheckboxMenu value="#{classRegister.courseFacade.findAll()}" label="Cursos" filter="true"  filterMatchMode="startsWith" panelStyle="width:220px">    
+                                <f:selectItems value="#{classRegister.courseFacade.findAll()}"/>
+                            </p:selectCheckboxMenu>      
+                        </p:column>
+                    </p:dataTable>  
+                </h:form>  
+            </ui:define>
+
+            <ui:define name="footerPage">
+                footerPage
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

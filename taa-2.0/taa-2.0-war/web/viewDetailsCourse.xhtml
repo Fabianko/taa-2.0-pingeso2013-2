@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+        
+        <ui:composition template="./templates/newTemplate.xhtml">
+            
+            <ui:define name="titulo">
+                Detalle curso
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                     <p:panelGrid columns="2" styleClass="centrar">
+                         <f:facet name="header">Datos del curso</f:facet>
+                         
+                         <p:outputLabel value="Código curso"/>
+                         <p:outputLabel value="#{courseDetailsMB.code}"/>
+                         
+                         <p:outputLabel value="Nombre curso"/>
+                         <p:outputLabel value="#{courseDetailsMB.name}"/>
+                         
+                         <p:outputLabel value="Profesor"/>
+                         <p:outputLabel value="#{courseDetailsMB.teacher}"/> 
+                         
+                         <p:outputLabel value="Horario"/>
+                         <p:outputLabel value="#{courseDetailsMB.workload}"/>
+                         
+                         <f:facet name="footer">   
+                             <p:commandButton value="Volver" immediate="true" action="#{courseDetailsMB.backToCourses()}"/>                         
+                         </f:facet>
+                     </p:panelGrid>                
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

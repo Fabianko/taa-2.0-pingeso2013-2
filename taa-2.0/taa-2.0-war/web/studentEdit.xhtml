@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+        
+        <ui:composition template="./templates/newTemplate.xhtml">
+            
+            <ui:define name="titulo">
+                Modificar estudiante
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                     <p:panelGrid columns="2" styleClass="centrar">
+                         <f:facet name="header">Datos del estudiante</f:facet>
+                         
+                         <p:outputLabel value="Rut alumno"/>
+                         <p:inputText value="#{studentEditMB.rut}" disabled="true" readonly="true"/>
+                         
+                         <p:outputLabel value="Primer nombre" for="name1"/>
+                         <p:inputText id="name1" value="#{studentEditMB.firstName}" required="true"/>
+                         
+                         <p:outputLabel value="Segundo nombre" for="name2"/>
+                         <p:inputText id="name2" value="#{studentEditMB.middleName}"/>
+                         
+                         <p:outputLabel value="Apellido paterno" for="primaryLastname"/>
+                         <p:inputText id="primaryLastname" value="#{studentEditMB.primaryLastName}"  required="true"/>
+                         
+                         <p:outputLabel value="Apellido materno" for="secondLastname"/>
+                         <p:inputText id="secondLastname" value="#{studentEditMB.secondLastName}"/>
+                         
+                         <p:outputLabel value="E-mail" for="email"/>
+                         <p:inputText id="email" value="#{studentEditMB.mail}" required="true"/>
+                         
+                         <p:outputLabel value="Carrera" for="program"/>
+                         <p:selectOneMenu id="program" value="#{studentEditMB.program}" required="true" requiredMessage="Carrera es obligatorio.">
+                            <f:selectItems value="#{studentEditMB.programOptions}"/>
+                         </p:selectOneMenu>
+                         
+                         <f:facet name="footer">
+                             <p:commandButton value="Guardar" ajax="false" action="#{studentEditMB.saveStudent()}"/>
+                             <p:commandButton value="Volver" immediate="true" action="#{studentEditMB.backToStudents()}"/>                         
+                         </f:facet>
+                     </p:panelGrid>                
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

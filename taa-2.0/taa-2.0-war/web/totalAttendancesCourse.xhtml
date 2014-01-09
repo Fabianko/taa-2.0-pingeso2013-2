@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      contentType="text/html">
+    
+    <body>
+         <ui:composition template="templates/newTemplate.xhtml">
+            <ui:define name="titulo">
+                Lista de tomas de asistencia
+            </ui:define>
+            <ui:define name="content">
+                
+                <h:form> 
+                    <p:panelGrid columns="5" styleClass="centrar" style="width: 100%;" >
+                        <f:facet name="header">Curso:   #{courseDetailsMB.name}   (Código   #{courseDetailsMB.code})</f:facet>
+                    <p:dataTable var="attendancesList" value="#{attendancesByCourseMB.listAttendances}" widgetVar="attendancesTable"
+                                 emptyMessage="No hay tomas de asistencia para mostrar" filteredValue="#{attendancesByCourseMB.attendancesFiltered}">
+
+                        <p:column id="rut" filterBy="#{attendancesList}"   
+                                headerText="Fecha y hora toma asistencia" 
+                                filterMatchMode="contains">  
+                            <h:outputText value="#{attendancesList}">
+                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="GMT-3"/>
+                            </h:outputText>
+                        </p:column>
+                        
+                        <p:column headerText="" rendered="true">
+                            <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" action="#{attendancesByCourseMB.editAttendance(attendancesList)}">
+                            </p:commandLink>
+                        </p:column>
+                        
+                        <p:column headerText="" rendered="true">
+                            <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cdAttendanceN_#{attendancesList.hashCode()}.show();" />
+                                
+                            <p:confirmDialog message="¿Está seguro que desea eliminar esta toma de asistencia?"
+                                                 header="Confirmación de eliminación de toma de asistencia" severity="alert"
+                                                 widgetVar="cdAttendanceN_#{attendancesList.hashCode()}" id="cdAttendanceN_#{attendancesList.hashCode()}" closeOnEscape="true">
+                                <p:commandButton value="Si" actionListener="#{attendancesByCourseMB.deleteAttendance(attendancesList)}"
+                                                 oncomplete="cdAttendanceN_#{attendancesList.hashCode()}.hide()" ajax="false" />
+                                <p:commandButton value="No" onclick="cdAttendanceN_#{attendancesList.hashCode()}.hide();" type="button" />
+                            </p:confirmDialog>
+                        </p:column>
+                         
+                    </p:dataTable>       
+                    <f:facet name="footer">
+                        <p:commandButton immediate="true" value="Volver" action="#{attendancesByCourseMB.backToCourses()}"/>                         
+                    </f:facet>
+                    </p:panelGrid>
+                    <p:contextMenu beforeShow="pcontext.show()" />
+                </h:form>
+                
+            </ui:define>
+        </ui:composition>       
+    </body>   
+</html>

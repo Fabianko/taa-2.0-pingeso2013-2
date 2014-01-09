@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      contentType="text/html">
+    
+    <body>
+         <ui:composition template="templates/newTemplate.xhtml">
+            <ui:define name="titulo">
+                Lista del curso
+            </ui:define>
+            <ui:define name="content">
+                
+                <h:form> 
+                    <p:panelGrid columns="5" styleClass="centrar" style="width: 100%;" >
+                        <f:facet name="header">Curso:   #{courseDetailsMB.name}   (Código   #{courseDetailsMB.code})</f:facet>
+                    <p:dataTable var="courseStudents" value="#{courseStudentsMB.studentsModel}" widgetVar="courseStudentsTable"
+                                 emptyMessage="No hay alumnos para mostrar" filteredValue="#{courseStudentsMB.courseFiltered}">
+                        
+                        <f:facet name="header">  
+                            <p:outputPanel>  
+                                <h:outputText value="Búsqueda global:" />  
+                                <p:inputText id="globalFilter" onkeyup="courseStudentsTable.filter();" style="width:150px" />  
+                            </p:outputPanel>  
+                        </f:facet>
+                        
+                        <p:column id="rut" filterBy="#{courseStudents.rut}"   
+                                headerText="Rut" 
+                                filterMatchMode="contains">  
+                            <h:outputText value="#{courseStudents.rut}" />  
+                        </p:column>
+                        
+                        <p:column id="firstName" filterBy="#{courseStudents.user.firstName}"   
+                                headerText="Nombre"  
+                                filterMatchMode="contains">  
+                            <h:outputText value="#{courseStudents.user.firstName}" />  
+                        </p:column>
+                        
+                        <p:column id="primaryLastName" filterBy="#{courseStudents.user.primaryLastName}"   
+                                headerText="Apellido paterno"  
+                                filterMatchMode="contains">  
+                            <h:outputText value="#{courseStudents.user.primaryLastName}" />  
+                        </p:column>
+                        
+                        <p:column id="secondLastName" filterBy="#{courseStudents.user.secondLastName}"   
+                                headerText="Apellido materno"  
+                                filterMatchMode="contains">  
+                            <h:outputText value="#{courseStudents.user.secondLastName}" />  
+                        </p:column>
+                        
+                        <p:column id="programName" filterBy="#{courseStudents.programCode.programName}"   
+                                headerText="Carrera" 
+                                filterOptions="#{courseStudentsMB.programOptions}"  
+                                filterMatchMode="exact">  
+                            <h:outputText value="#{courseStudents.programCode.programName}" />  
+                        </p:column>
+                        
+                        <p:column headerText="" rendered="true">
+                            <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cdCourseStudentN_#{courseStudents.rut}.show();" />
+                                
+                            <p:confirmDialog message="¿Está seguro que desea eliminar al estudiante del curso #{courseDetailsMB.name} (Código #{courseDetailsMB.code})?"
+                                                 header="Confirmación de eliminación de estudiante del curso" severity="alert"
+                                                 widgetVar="cdCourseStudentN_#{courseStudents.rut}" id="cdCourseStudentN" closeOnEscape="true">
+                                <p:commandButton value="Si" actionListener="#{courseStudentsMB.deleteCourseStudent(courseStudents.rut)}"
+                                                     oncomplete="cdCourseStudentN_#{courseStudents.rut}.hide()" ajax="false" />
+                            <p:commandButton value="No" onclick="cdCourseStudentN_#{courseStudents.rut}.hide();" type="button" />
+                            </p:confirmDialog>
+                        </p:column>
+                         
+                    </p:dataTable>       
+                    <f:facet name="footer">
+                        <p:commandButton value="Agregar estudiante al curso" action="#{courseStudentsMB.addCourseStudent(courseDetailsMB.code)}" rendered="true"/>  
+                        <p:commandButton immediate="true" value="Volver" action="#{courseStudentsMB.backToCourses()}"/>                         
+                    </f:facet>
+                    </p:panelGrid>
+                    <p:contextMenu beforeShow="pcontext.show()" />
+                </h:form>
+                
+            </ui:define>
+        </ui:composition>       
+    </body>   
+</html>

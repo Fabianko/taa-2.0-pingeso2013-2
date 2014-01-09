@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      contentType="text/html">
+    
+    <body>
+         <ui:composition template="templates/newTemplate.xhtml">
+            <ui:define name="titulo">
+                Profesores
+            </ui:define>
+            <ui:define name="content">
+                <h:form> 
+                    <p:panelGrid columns="5" styleClass="centrar" style="width: 100%;" >
+                    <f:facet name="header">Listado de profesores</f:facet>
+                    <p:dataTable var="anyTeacher" value="#{teacherMB.list}" widgetVar="teachersTable" paginator="true" paginatorAlwaysVisible="false" rows="10" rowKey="#{anyTeacher.rut}" paginatorPosition="bottom"
+                                 emptyMessage="No hay profesores para mostrar" filteredValue="#{teacherMB.filteredTeachers}">
+                        
+                        <f:facet name="header">  
+                            <p:outputPanel>  
+                                <h:outputText value="Búsqueda global:" />  
+                                <p:inputText id="globalFilter" onkeyup="teachersTable.filter()" style="width:150px" />  
+                            </p:outputPanel>  
+                        </f:facet>
+                        
+                        <p:column id="rut" filterBy="#{anyTeacher.rut}"   
+                                headerText="Rut" 
+                                filterMatchMode="contains">  
+                            <h:outputText value="#{anyTeacher.rut}" />  
+                        </p:column> 
+                        
+                        <p:column id="firstName" filterBy="#{anyTeacher.user.firstName}"   
+                                headerText="Nombre"  
+                                filterMatchMode="contains">  
+                            <h:outputText value="#{anyTeacher.user.firstName}" />  
+                        </p:column>  
+                        
+                        <p:column id="primaryLastName" filterBy="#{anyTeacher.user.primaryLastName}"   
+                                headerText="Apellido paterno"  
+                                filterMatchMode="contains">  
+                            <h:outputText value="#{anyTeacher.user.primaryLastName}" />  
+                        </p:column>
+                        
+                        <p:column id="secondLastName" filterBy="#{anyTeacher.user.secondLastName}"   
+                                headerText="Apellido materno"  
+                                filterMatchMode="contains">  
+                            <h:outputText value="#{anyTeacher.user.secondLastName}" />  
+                        </p:column>
+                        
+                        <p:column headerText="" >
+                            <p:commandLink value="  " title="Ver datos del profesor" styleClass="ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{teacherMB.viewDetailsTeacher(anyTeacher.rut)}">
+                            </p:commandLink>
+                        </p:column>
+                        
+                        <p:column headerText="" rendered="#{courseMB.showBtnAdd}">
+                            <p:commandLink value="  " title="Editar datos del profesor" styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" action="#{teacherMB.edit(anyTeacher.rut)}">
+                            </p:commandLink>
+                        </p:column>
+                        
+                        <p:column headerText="" rendered="#{courseMB.showBtnAdd}">
+                            <p:commandLink value="  " title="Eliminar este profesor" styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cd_#{anyTeacher.rut}.show();" />
+                                
+                            <p:confirmDialog message="¿Está seguro que desea eliminar al profesor?"
+                                                 header="Confirmación de eliminación de profesor" severity="alert"
+                                                 widgetVar="cd_#{anyTeacher.rut}" id="cd" closeOnEscape="true">
+                            <p:commandButton value="Si" actionListener="#{teacherMB.delete(anyTeacher.rut)}"
+                                                     oncomplete="cd_#{anyTeacher.rut}.hide()" ajax="false" />
+                            <p:commandButton value="No" onclick="cd_#{anyTeacher.rut}.hide()" type="button" />
+                            
+                            </p:confirmDialog>
+                        </p:column>
+                        
+                    </p:dataTable>       
+                    <f:facet name="footer">
+                        <p:commandButton value="Agregar profesor" action="#{teacherMB.add()}" rendered="#{courseMB.showBtnAdd}"/>  
+                    </f:facet>
+                    </p:panelGrid>
+                    <p:contextMenu beforeShow="pcontext.show()" />
+                </h:form>
+            </ui:define>
+        </ui:composition>       
+    </body>   
+</html>

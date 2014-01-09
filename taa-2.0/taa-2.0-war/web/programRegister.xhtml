@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      contentType="text/html">
+    
+    <body>
+         <ui:composition template="templates/newTemplate.xhtml">
+            <ui:define name="titulo">
+                Registrar carrera
+            </ui:define>
+            <ui:define name="content">
+                
+                <h:form>
+                     <p:panelGrid columns="2" styleClass="centrar">
+                         <f:facet name="header">Ingrese datos de la carrera</f:facet>
+
+                         <p:outputLabel value="Código carrera" for="codeProgram"/>
+                         <p:inputText id="codeProgram" value="#{programRegisterMB.code}" required="true" requiredMessage="Código carrera es obligatorio.">
+                             <f:validator validatorId="programCodeValidator"/>
+                         </p:inputText>
+
+                         <p:outputLabel value="Nombre carrera" for="nameProgram"/>
+                         <p:inputText id="nameProgram" value="#{programRegisterMB.name}" required="true" requiredMessage="Nombre carrera es obligatorio.">
+                             <f:validator validatorId="programNameValidator"/>
+                         </p:inputText>
+                         
+                         <p:outputLabel value="Duración (Semestres)" for="nLevels"/>
+                         <p:inputText id="nLevels" value="#{programRegisterMB.levels}" required="true" requiredMessage="Duración (Semestres) es obligatorio.">
+                             <f:validator validatorId="levelsProgramValidator"></f:validator>
+                         </p:inputText>
+                               
+                         <f:facet name="footer">
+                             <p:commandButton value="Guardar" ajax="false" action="#{programRegisterMB.programRegisterNow()}"/>
+                             <p:commandButton immediate="true" value="Volver" action="#{programRegisterMB.backToPrograms()}"/>                         
+                         </f:facet>
+                         
+                    </p:panelGrid>
+                </h:form>
+                
+            </ui:define>
+        </ui:composition>       
+    </body>   
+</html>

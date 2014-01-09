@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      contentType="text/html">
+    
+    <body>
+         <ui:composition template="templates/newTemplate.xhtml">
+            <ui:define name="titulo">
+                Registrar alumno
+            </ui:define>
+            <ui:define name="content">
+                
+                <h:form>
+                     <p:panelGrid columns="2" styleClass="centrar">
+                         <f:facet name="header">Ingrese datos del estudiante</f:facet>
+
+                         <p:outputLabel value="Rut" for="rut"/>
+                         <p:inputText id="rut" value="#{studentRegister.rut}" required="true" maxlength="9" requiredMessage="Rut es obligatorio.">
+                             <f:validator validatorId="RutValidator"/>
+                         </p:inputText>
+
+                         <p:outputLabel value="Primer nombre" for="primerNombre"/>
+                         <p:inputText id="primerNombre" value="#{studentRegister.name1}" required="true" requiredMessage="Primer nombre es obligatorio."/>
+                         
+                         <p:outputLabel value="Segundo nombre" for="segundoNombre"/>
+                         <p:inputText id="segundoNombre" value="#{studentRegister.name2}"/>
+
+                         <p:outputLabel value="Apellido paterno" for="apellido1"/>
+                         <p:inputText id="apellido1" value="#{studentRegister.lastNameP}" required="true" requiredMessage="Apellido paterno es obligatorio."/>
+
+                         <p:outputLabel value="Apellido materno" for="apellido2"/>
+                         <p:inputText id="apellido2" value="#{studentRegister.lastNameM}" required="true" requiredMessage="Apellido materno es obligatorio."/>
+
+                         <p:outputLabel value="E-mail" for="email"/>
+                         <p:inputText id="email" value="#{studentRegister.email}" required="true" requiredMessage="E-mail es obligatorio.">
+                             <f:validator validatorId="EmailValidator"/>
+                         </p:inputText>
+                         
+                                             
+                         <p:outputLabel value="Carrera" for="program"/>
+                         <p:selectOneMenu id="program" value="#{studentRegister.program}" required="true" requiredMessage="Carrera es obligatorio.">
+                            <f:selectItems value="#{studentRegister.programOptions}"/>
+                         </p:selectOneMenu>
+                         
+                         <f:facet name="footer">
+                             <p:commandButton value="Guardar" ajax="false" action="#{studentRegister.studentRegisterNow()}"/>
+                             <p:commandButton immediate="true" value="Volver" action="#{studentRegister.backToStudents()}"/>                         
+                         </f:facet>
+                         
+                    </p:panelGrid>
+                    
+                    <p:dialog header="Captura estudiante" widgetVar="photoDialog" modal="true"
+                               width="400" visible="false" resizable="false">
+                            
+                            <p:panel style="text-align: center">
+                                <br/>
+                                Por favor mira de frente a la cámara sin sonreír ni mover la cabeza. A una distancia aproximada de 60 cms (Que tu rostro ocupe la mayoría del cuadro).
+                                <br/>
+                                <br/>
+                                <p:photoCam widgetVar="pc" listener="#{autenticationStudents.oncapture}"/>
+                                <br/>
+                            </p:panel>
+                        
+                            <p:panel style="text-align: center">
+                                <p:commandButton style="text-align: center;" type="button" value="Fotografiar"
+                                        onclick="pc.capture()">
+                                    <p:ajax oncomplete="photoDialog.hide();"/>
+                                </p:commandButton>
+                            </p:panel>
+                        </p:dialog>
+                </h:form>
+                
+                <h:form style="float: left;">
+                        <!--<p:outputLabel value="Nombre fotos" for="photoName"/>-->
+                        <h:inputHidden id="photoName" value="{autenticationStudents.currentPhoto}"/>
+                </h:form>
+                
+            </ui:define>
+        </ui:composition>       
+    </body>   
+</html>

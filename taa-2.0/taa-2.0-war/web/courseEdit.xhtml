@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+        
+        <ui:composition template="./templates/newTemplate.xhtml">
+            
+            <ui:define name="titulo">
+                Modificar curso
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                     <p:panelGrid columns="2" styleClass="centrar">
+                         <f:facet name="header">Datos del curso</f:facet>
+                         
+                         <p:outputLabel value="Código curso"/>
+                         <p:inputText value="#{courseEditMB.courseCode}" disabled="true" readonly="true"/>
+                         
+                         <p:outputLabel value="Nombre curso" for="courseName"/>
+                         <p:inputText id="courseName" value="#{courseEditMB.courseName}" required="true">
+                         </p:inputText>
+                         
+                         <p:outputLabel value="Profesor" for="teacher"/>
+                         <p:selectOneMenu id="teacher" value="#{courseEditMB.teacher}" required="true" requiredMessage="Profesor es obligatorio.">
+                            <f:selectItems value="#{courseEditMB.teacherOptions}"/>
+                         </p:selectOneMenu>
+                         
+                         <f:facet name="footer">
+                             <p:commandButton value="Guardar" ajax="false" action="#{courseEditMB.saveCourse()}"/>
+                             <p:commandButton value="Volver" immediate="true" action="#{courseEditMB.backToCourses()}"/>                         
+                         </f:facet>
+                     </p:panelGrid>                
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      contentType="text/html">
+    
+    <body>
+         <ui:composition template="templates/newTemplate.xhtml">
+            <ui:define name="titulo">
+                Registrar curso
+            </ui:define>
+            <ui:define name="content">
+                
+                <h:form>
+                     <p:panelGrid columns="2" styleClass="centrar">
+                         <f:facet name="header">Ingrese datos del curso</f:facet>
+                         
+                         <p:outputLabel value="Código curso" for="code"/>
+                         <p:inputText id="code" value="#{classRegister.code}" required="true" maxlength="9" requiredMessage="Código de curso es obligatorio.">
+                             <f:validator validatorId="courseCodeValidator"/>
+                         </p:inputText>
+
+                         <p:outputLabel value="Nombre curso" for="name"/>
+                         <p:inputText id="name" value="#{classRegister.name}" required="true" requiredMessage="Nombre de curso es obligatorio.">
+                             <f:validator validatorId="courseNameValidator"/>
+                         </p:inputText>
+
+                         <p:outputLabel value="Profesor" for="teacher"/>
+                         <p:selectOneMenu id="teacher" value="#{classRegister.teacher}" required="true" requiredMessage="Profesor es obligatorio.">
+                            <f:selectItems value="#{classRegister.teacherOptions}"/>
+                         </p:selectOneMenu>
+                         
+                         <f:facet name="footer">
+                             <p:commandButton value="Guardar" ajax="false" action="#{classRegister.courseRegisterNow()}"/>
+                             <p:commandButton immediate="true" value="Volver" action="#{classRegister.backToCourses()}"/>                         
+                         </f:facet>
+                    </p:panelGrid>
+                </h:form>
+            </ui:define>
+        </ui:composition>       
+    </body>   
+</html>

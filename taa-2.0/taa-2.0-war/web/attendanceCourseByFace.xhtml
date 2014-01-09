@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      contentType="text/html">
+    
+    <body>
+         <ui:composition template="templates/newTemplate.xhtml">
+            <ui:define name="titulo">
+                Lista del curso
+            </ui:define>
+            <ui:define name="content">
+                
+                <h:form>
+                    <p:panelGrid columns="5" styleClass="centrar" style="width: 100%;" >
+                        <f:facet name="header">Curso:   #{courseDetailsMB.name}   (Código   #{courseDetailsMB.code})</f:facet>
+                        <p:dataTable var="courseStudents" value="#{courseStudentsByFaceMB.courseList}" widgetVar="courseStudentsTable" rowKey="#{courseStudents.rut}"
+                                 emptyMessage="No hay alumnos para mostrar" filteredValue="#{courseStudentsByFaceMB.courseFiltered}">
+                        
+                        <f:facet name="header">  
+                            <p:outputPanel>  
+                                <h:outputText value="Búsqueda global:" />  
+                                <p:inputText id="globalFilter" onkeyup="courseStudentsTable.filter()" style="width:150px" />  
+                                <h:outputText value="Fecha asistencia:" style="margin-left: 40px;" />
+                                <p:calendar value="#{courseStudentsByFaceMB.date1}" readonly="true" pattern="MM/dd/yyyy HH:mm" required="true" requiredMessage="La fecha de la asistencia es obligatoria."/>
+                            </p:outputPanel>  
+                        </f:facet>
+                        
+                        <p:column id="rut" filterBy="#{courseStudents.rut}"   
+                                headerText="Rut" 
+                                filterMatchMode="contains">  
+                            <h:outputText value="#{courseStudents.rut}" />  
+                        </p:column>
+                        
+                            <p:column id="firstName" filterBy="#{courseStudents.user.firstName}"   
+                                headerText="Nombre"  
+                                filterMatchMode="contains">  
+                            <h:outputText value="#{courseStudents.user.firstName}" />  
+                        </p:column>
+                        
+                        <p:column id="primaryLastName" filterBy="#{courseStudents.user.primaryLastName}"   
+                                headerText="Apellido paterno"  
+                                filterMatchMode="contains">  
+                            <h:outputText value="#{courseStudents.user.primaryLastName}" />  
+                        </p:column>
+                        
+                        <p:column id="secondLastName" filterBy="#{courseStudents.user.secondLastName}"   
+                                headerText="Apellido materno"  
+                                filterMatchMode="contains">  
+                            <h:outputText value="#{courseStudents.user.secondLastName}" />  
+                        </p:column>
+                        
+                        <p:column id="photoText">
+                            <p:commandButton action="#{courseStudentsByFaceMB.attendanceByFace(courseStudents.rut)}" id="photos_#{courseStudents.rut}" value="Capturar foto" immediate="true" ajax="true" onclick="photoDialog_#{courseStudents.rut}.show()" />
+                            <p:dialog header="Captura estudiante" widgetVar="photoDialog_#{courseStudents.rut}" modal="true"
+                                visible="false" resizable="false">
+                                <p:panel style="text-align: center;">
+                                <br/>
+                                Por favor mira de frente a la cámara sin sonreír ni mover la cabeza.
+                                <br/>
+                                A una distancia aproximada de 60 cms
+                                <br/>
+                                (Que tu rostro ocupe la mayoría del cuadro).
+                                <br/>
+                                <br/>
+                                <p:photoCam widgetVar="pc" listener="#{courseStudentsByFaceMB.oncapture}"/>
+                                <br/>
+                                </p:panel>
+                                <p:panel style="text-align: center">
+                                <p:commandButton style="text-align: center;" type="button" value="Fotografiar"
+                                    onclick="pc.capture()">
+                                    <p:ajax oncomplete="photoDialog_#{courseStudents.rut}.hide();"/>
+                                </p:commandButton>
+                                </p:panel>
+                            </p:dialog>   
+                        </p:column>
+                    </p:dataTable>
+                    <f:facet name="footer">
+                        <p:commandButton immediate="true" value="Finalizar" onclick="cdCourse.show();"/>                         
+                    </f:facet>
+                    </p:panelGrid>
+                    <p:contextMenu beforeShow="pcontext.show()" />
+                </h:form>
+                <h:form>
+                <p:confirmDialog message="El proceso de toma de asistencia va a finalizar. ¿Desea continuar?"
+                                                 header="Confirmación" severity="alert"
+                                                 widgetVar="cdCourse" id="cdCourse" closeOnEscape="true">
+                    <p:commandButton value="Si" actionListener="#{courseStudentsByFaceMB.backToCourses()}"
+                                                     oncomplete="cdCourse.hide()" ajax="false" />
+                    <p:commandButton value="No" onclick="cdCourse.hide()" type="button" />
+                </p:confirmDialog>
+                </h:form>
+            </ui:define>
+        </ui:composition>     
+    </body>   
+</html>

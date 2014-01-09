@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+        
+        <ui:composition template="./templates/newTemplate.xhtml">
+            
+            <ui:define name="titulo">
+                Modificar profesor
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                     <p:panelGrid columns="2" styleClass="centrar">
+                         <f:facet name="header">Datos del profesor</f:facet>
+                         
+                         <p:outputLabel value="Rut profesor"/>
+                         <p:inputText value="#{teacherEditMB.rut}" disabled="true" readonly="true"/>
+                         
+                         <p:outputLabel value="Primer nombre" for="name1"/>
+                         <p:inputText id="name1" value="#{teacherEditMB.firstName}" required="true"/>
+                         
+                         <p:outputLabel value="Segundo nombre" for="name2"/>
+                         <p:inputText id="name2" value="#{teacherEditMB.middleName}"/>
+                         
+                         <p:outputLabel value="Apellido paterno" for="primaryLastname"/>
+                         <p:inputText id="primaryLastname" value="#{teacherEditMB.primaryLastName}"  required="true"/>
+                         
+                         <p:outputLabel value="Apellido materno" for="secondLastname"/>
+                         <p:inputText id="secondLastname" value="#{teacherEditMB.secondLastName}"/>
+                         
+                         <p:outputLabel value="E-mail" for="email"/>
+                         <p:inputText id="email" value="#{teacherEditMB.mail}" required="true"/>
+                              
+                         <p:outputLabel value="Reiniciar password"/>
+                         <p:selectBooleanCheckbox label="Reiniciar password" value="#{teacherEditMB.checkPass}">
+                         </p:selectBooleanCheckbox>
+                         
+                         <p:outputLabel value=""/>
+                         <h:inputHidden value="#{teacherEditMB.pass}"/>
+                         
+                         <f:facet name="footer">
+                             <p:commandButton value="Guardar" ajax="false" action="#{teacherEditMB.saveTeacher()}"/>
+                             <p:commandButton value="Volver" immediate="true" action="#{teacherEditMB.backToTeachers()}"/>                         
+                         </f:facet>
+                     </p:panelGrid>                
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

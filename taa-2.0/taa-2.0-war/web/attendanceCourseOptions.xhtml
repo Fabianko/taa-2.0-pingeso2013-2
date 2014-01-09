@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      contentType="text/html">
+    
+    <body>
+         <ui:composition template="templates/newTemplate.xhtml">
+            <ui:define name="titulo">
+                Lista del curso
+            </ui:define>
+            <ui:define name="content">
+                
+                <h:form>
+                    <p:panelGrid columns="5" styleClass="centrar" style="width: 100%;" >
+                        <f:facet name="header">Curso:   #{courseDetailsMB.name}   (Código   #{courseDetailsMB.code})</f:facet>
+                    <p:dataTable var="courseStudents" sortBy="#{courseStudents.user.primaryLastName}" sortOrder="ascending" value="#{courseStudentsMB.studentsModel}" widgetVar="courseStudentsTable"
+                                 emptyMessage="No hay alumnos para mostrar" filteredValue="#{courseStudentsMB.courseFiltered}" selection="#{courseStudentsMB.selectedStudent}">
+                        
+                        <f:facet name="header">  
+                            <p:outputPanel>  
+                                <h:outputText value="Búsqueda global:" />  
+                                <p:inputText id="globalFilter" onkeyup="courseStudentsTable.filter()" style="width:150px" />  
+                                <h:outputText value="Fecha asistencia:" style="margin-left: 40px;" />
+                                <p:calendar value="#{courseStudentsMB.date1}" readonly="true" pattern="MM/dd/yyyy HH:mm" required="true" requiredMessage="La fecha de la asistencia es obligatoria."/>
+                            </p:outputPanel>  
+                        </f:facet>
+                        
+                        <p:column id="rut" filterBy="#{courseStudents.rut}"   
+                                headerText="Rut" 
+                                filterMatchMode="contains">  
+                            <h:outputText value="#{courseStudents.rut}" />  
+                        </p:column>
+                        
+                        <p:column id="firstName" filterBy="#{courseStudents.user.firstName}"   
+                                headerText="Nombre"  
+                                filterMatchMode="contains">  
+                            <h:outputText value="#{courseStudents.user.firstName}" />  
+                        </p:column>
+                        
+                        <p:column id="primaryLastName" filterBy="#{courseStudents.user.primaryLastName}"   
+                                headerText="Apellido paterno"  
+                                filterMatchMode="contains">  
+                            <h:outputText value="#{courseStudents.user.primaryLastName}" id="h" />  
+                        </p:column>
+                        
+                        <p:column id="secondLastName" filterBy="#{courseStudents.user.secondLastName}"   
+                                headerText="Apellido materno"  
+                                filterMatchMode="contains">  
+                            <h:outputText value="#{courseStudents.user.secondLastName}" />  
+                        </p:column>
+                        
+                        <p:column selectionMode="multiple" style="width:2%" />  
+                        <!--
+                        <p:column id="attendanceCurrent_{courseStudents.rut}" selectionMode="multiple">
+                            <p:selectOneRadio id="options_{courseStudents.rut}" value="{courseStudentsMB.stateAttendance}" >  
+                                <f:selectItem itemLabel="Ausente" itemValue="0"/>
+                                <f:selectItem itemLabel="Presente" itemValue="1"/>
+                                <f:selectItem itemLabel="Justificado" itemValue="2"/>
+                            </p:selectOneRadio>
+                        </p:column>
+                        -->
+                    </p:dataTable>
+                    <f:facet name="footer">
+                        <p:commandButton value="Cerrar asistencia curso" action="#{courseStudentsMB.registerAttendanceNow()}" rendered="true"/>  
+                        <p:commandButton immediate="true" value="Volver" onclick="cdCourse.show();"/>                         
+                    </f:facet>
+                    </p:panelGrid>
+                    <p:contextMenu beforeShow="pcontext.show()" />
+                </h:form>
+                <h:form>
+                <p:confirmDialog message="Al volver se perderá el estado de la asistencia actual. ¿Desea continuar?"
+                                                 header="Confirmación" severity="alert"
+                                                 widgetVar="cdCourse" id="cdCourse" closeOnEscape="true">
+                    <p:commandButton value="Si" actionListener="#{courseStudentsMB.backToCourses()}"
+                                                     oncomplete="cdCourse.hide()" ajax="false" />
+                    <p:commandButton value="No" onclick="cdCourse.hide()" type="button" />
+                </p:confirmDialog>
+                </h:form>
+            </ui:define>
+        </ui:composition>     
+    </body>   
+</html>

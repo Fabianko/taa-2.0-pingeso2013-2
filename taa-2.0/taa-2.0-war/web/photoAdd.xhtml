@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+    
+    <body>
+
+        <ui:composition template="./templates/newTemplate.xhtml">
+
+            <ui:define name="titulo">
+                Autentificando Alumnos
+            </ui:define>
+            
+            <ui:define name="btnsBar">
+                btnsBar
+            </ui:define>
+            <ui:define name="content">
+        
+            <h:form style="background: black">
+                <p:panel style="width: 370px; text-align: center;" >
+                    <h:panelGrid  >
+                        <h:outputLabel style="text-align: center;" for="fotoLink" value="Click en la Foto" />
+
+                        <p:commandLink  style="text-align: center;" id="fotoLink" onclick="fotoDialog.show()">
+                            <p:panel style="text-align: center">
+                                <p:graphicImage  width="300px" height="270px" value="#{pageContext.contextPath}/resources/img/m.jpg"
+                                                 rendered="#{! autenticationStudents.verFoto}" />
+                                <p:graphicImage style="text-align: center;" rendered="#{autenticationStudents.verFoto}"
+                                                value="#{servletContext.getRealPath(foto)}/resources/img/#{autenticationStudents.photo}"
+                                                cache="false" />
+                            </p:panel>
+                        </p:commandLink>
+                    <p:panel style="text-align: center">
+                        <p:commandButton  style="text-align: center;" 
+                                          action="#{autenticationStudents.confirmStudents()}"
+                                          value="Validar" />
+                    </p:panel>
+                    </h:panelGrid>
+           
+                </p:panel>
+
+                <p:dialog header="Haz una foto" widgetVar="fotoDialog" modal="true"
+                          width="400" visible="false" resizable="false">
+                    <p:panel style="text-align: center">
+                        <p:photoCam widgetVar="pc" listener="#{autenticationStudents.oncapture}"
+                                    update="fotoLink" />
+                    </p:panel>
+                    <br />
+                    <p:panel style="text-align: center">
+                        <p:commandButton  style="text-align: center;" type="button" value="Hacer foto"
+                                          onclick="pc.capture()">
+                            <p:ajax oncomplete="fotoDialog.hide();" />
+                        </p:commandButton>
+                    </p:panel>
+                </p:dialog>
+
+
+            </h:form>
+         </ui:define>
+      </ui:composition>
+
+    </body>
+</html>

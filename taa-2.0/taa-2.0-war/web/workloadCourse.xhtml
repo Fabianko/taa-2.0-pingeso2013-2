@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <body>
+
+        <ui:composition template="templates/newTemplate.xhtml">
+
+            <ui:define name="titulo">
+                Horario del Curso
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                <p:panelGrid>
+                    <f:facet name="header">    
+                    <p:row>
+                        <p:column colspan="2">Horario de la Asignatura</p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column></p:column>>
+                        <p:column>| LUNES | MARTES | MIERCOLES | JUEVES | VIERNES | SABADO |</p:column>
+
+                    </p:row>
+                    </f:facet>
+             
+                    <p:row>
+                        
+                        <p:column>
+                            <h:outputText value="08:00 - 9:30 " />
+                        </p:column>
+                        <p:column>
+                            <p:selectManyCheckbox id="lineDirection" value="#{workloadCourseMB.selectedOptions}">  
+
+                                <f:selectItem itemLabel=" " itemValue="L1" />  
+                                <f:selectItem itemLabel="  " itemValue="M1" />  
+                                <f:selectItem itemLabel="  " itemValue="W1" />  
+                                <f:selectItem itemLabel="  " itemValue="J1" />  
+                                <f:selectItem itemLabel="  " itemValue="V1" />  
+                                <f:selectItem itemLabel="  " itemValue="S1" />  
+                            </p:selectManyCheckbox> 
+                        </p:column>
+                    </p:row>
+                   <p:row>
+                        <p:column>
+                            <h:outputText value="09:40 - 11:10 " />
+                        </p:column>
+                        <p:column>
+                            <p:selectManyCheckbox id="lineDirection1" value="#{workloadCourseMB.selectedOptions1}">  
+
+                                <f:selectItem itemLabel=" " itemValue="L2" />  
+                                <f:selectItem itemLabel="  " itemValue="M2" />  
+                                <f:selectItem itemLabel="  " itemValue="W2" />  
+                                <f:selectItem itemLabel="  " itemValue="J2" />  
+                                <f:selectItem itemLabel="  " itemValue="V2" />  
+                                <f:selectItem itemLabel="  " itemValue="S2" />  
+                            </p:selectManyCheckbox> 
+                        </p:column>
+                         </p:row>
+                    <p:row>
+                        <p:column>
+                            <h:outputText value="11:20 - 12:50 " />
+                        </p:column>
+                        <p:column>
+                            <p:selectManyCheckbox id="lineDirection2" value="#{workloadCourseMB.selectedOptions2}">  
+
+                                <f:selectItem itemLabel=" " itemValue="L3" />  
+                                <f:selectItem itemLabel="  " itemValue="M3" />  
+                                <f:selectItem itemLabel="  " itemValue="W3" />  
+                                <f:selectItem itemLabel="  " itemValue="J3" />  
+                                <f:selectItem itemLabel="  " itemValue="V3" />  
+                                <f:selectItem itemLabel="  " itemValue="S3" />  
+                            </p:selectManyCheckbox> 
+                        </p:column>
+                         </p:row>
+                    <p:row>
+                        <p:column>
+                            <h:outputText value="13:50 - 15:20 " />
+                        </p:column>
+                        <p:column>
+                            <p:selectManyCheckbox id="lineDirection3" value="#{workloadCourseMB.selectedOptions3}">  
+
+                                <f:selectItem itemLabel=" " itemValue="L4" />  
+                                <f:selectItem itemLabel="  " itemValue="M4" />  
+                                <f:selectItem itemLabel="  " itemValue="W4" />  
+                                <f:selectItem itemLabel="  " itemValue="J4" />  
+                                <f:selectItem itemLabel="  " itemValue="V4" />  
+                                <f:selectItem itemLabel="  " itemValue="S4" />  
+                            </p:selectManyCheckbox> 
+                        </p:column>
+                         </p:row>
+                    <p:row>
+                        <p:column>
+                            <h:outputText value="15:30 - 17:00 " />
+                        </p:column>
+                        <p:column>
+                            <p:selectManyCheckbox id="lineDirection4" value="#{workloadCourseMB.selectedOptions4}">  
+
+                                <f:selectItem itemLabel=" " itemValue="L5" />  
+                                <f:selectItem itemLabel="  " itemValue="M5" />  
+                                <f:selectItem itemLabel="  " itemValue="W5" />  
+                                <f:selectItem itemLabel="  " itemValue="J5" />  
+                                <f:selectItem itemLabel="  " itemValue="V5" />  
+                                <f:selectItem itemLabel="  " itemValue="S5" />  
+                            </p:selectManyCheckbox> 
+                        </p:column>
+                         </p:row>
+                    <p:row>
+                        <p:column>
+                            <h:outputText value="17:10 - 18:40 " />
+                        </p:column>
+                        <p:column>
+                            <p:selectManyCheckbox id="lineDirection5" value="#{workloadCourseMB.selectedOptions5}">  
+
+                                <f:selectItem itemLabel=" " itemValue="L6" />  
+                                <f:selectItem itemLabel="  " itemValue="M6" />  
+                                <f:selectItem itemLabel="  " itemValue="W6" />  
+                                <f:selectItem itemLabel="  " itemValue="J6" />  
+                                <f:selectItem itemLabel="  " itemValue="V6" />  
+                                <f:selectItem itemLabel="  " itemValue="S6" />  
+                            </p:selectManyCheckbox> 
+                        </p:column>
+                         </p:row>
+                    <p:row>
+                        <p:column>
+                            <h:outputText value="18:50 - 20:10 " />
+                        </p:column>
+                        <p:column>
+                            <p:selectManyCheckbox id="lineDirection6" value="#{workloadCourseMB.selectedOptions6}">  
+
+                                <f:selectItem itemLabel=" " itemValue="L7" />  
+                                <f:selectItem itemLabel="  " itemValue="M7" />  
+                                <f:selectItem itemLabel="  " itemValue="W7" />  
+                                <f:selectItem itemLabel="  " itemValue="J7" />  
+                                <f:selectItem itemLabel="  " itemValue="V7" />  
+                                <f:selectItem itemLabel="  " itemValue="S7" />  
+                            </p:selectManyCheckbox> 
+                        </p:column>
+                                                                                                                                          
+                       
+                    </p:row>
+            <f:facet name="footer">
+                <p:row>
+                    <p:column>
+                        <p:commandButton  value="Guardar" icon="ui-icon-check" style="margin:0" action="#{workloadCourseMB.saveCourse()}"/>  
+                        <p:commandButton immediate="true" value="Volver" action="#{courseMB.backToCourses()}"/> 
+                    </p:column>
+                </p:row>
+            </f:facet> 
+                </p:panelGrid>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

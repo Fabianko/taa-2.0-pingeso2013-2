@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <body>
+        
+        <ui:composition template="./templates/newTemplate.xhtml">
+            
+            <ui:define name="titulo">
+                Detalle profesor
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                     <p:panelGrid columns="2" styleClass="centrar">
+                         <f:facet name="header">Datos del profesor</f:facet>
+                         
+                         <p:outputLabel value="Rut profesor"/>
+                         <p:outputLabel value="#{teacherDetailsMB.rut}"/>
+                         
+                         <p:outputLabel value="Nombre"/>
+                         <p:outputLabel value="#{teacherDetailsMB.firstName}"/>
+                         
+                         <p:outputLabel value="Segundo nombre"/>
+                         <p:outputLabel value="#{teacherDetailsMB.middleName}"/>
+                         
+                         <p:outputLabel value="Apellido paterno"/>
+                         <p:outputLabel value="#{teacherDetailsMB.primaryLastName}"/>
+                         
+                         <p:outputLabel value="Apellido materno"/>
+                         <p:outputLabel value="#{teacherDetailsMB.secondLastName}"/>
+                         
+                         <p:outputLabel value="E-mail"/>
+                         <p:outputLabel value="#{teacherDetailsMB.mail}"/>
+                         
+                         <f:facet name="footer">   
+                            <p:commandButton value="Volver" action="#{teacherDetailsMB.backToTeachers()}"/>                         
+                         </f:facet>
+                     </p:panelGrid>                
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

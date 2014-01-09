@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      contentType="text/html">
+    
+    <body>
+         <ui:composition template="templates/newTemplate.xhtml">
+            <ui:define name="titulo">
+                Estudiantes
+            </ui:define>
+            <ui:define name="content">
+                <h:form> 
+                    <p:panelGrid columns="5" styleClass="centrar" style="width: 100%;" >
+                    <f:facet name="header">Listado de estudiantes</f:facet>
+                    <p:dataTable var="alumno" value="#{student.lista}" widgetVar="studentsTable" paginator="true" paginatorAlwaysVisible="false" rows="10" rowKey="#{alumno.rut}" paginatorPosition="bottom"
+                                 emptyMessage="No hay estudiantes para mostrar" filteredValue="#{student.filteredStudents}">
+                        
+                        <f:facet name="header">  
+                            <p:outputPanel>  
+                                <h:outputText value="Búsqueda global:" />  
+                                <p:inputText id="globalFilter" onkeyup="studentsTable.filter()" style="width:150px" />  
+                            </p:outputPanel>  
+                        </f:facet>
+                        
+                        <p:column id="rut" filterBy="#{alumno.rut}"   
+                                headerText="Rut" 
+                                filterMatchMode="contains">  
+                            <h:outputText value="#{alumno.rut}" />  
+                        </p:column> 
+                        
+                        <p:column id="firstName" filterBy="#{alumno.user.firstName}"   
+                                headerText="Nombre"  
+                                filterMatchMode="contains">  
+                            <h:outputText value="#{alumno.user.firstName}" />  
+                        </p:column>  
+                        
+                        <p:column id="primaryLastName" filterBy="#{alumno.user.primaryLastName}"   
+                                headerText="Apellido paterno"  
+                                filterMatchMode="contains">  
+                            <h:outputText value="#{alumno.user.primaryLastName}" />  
+                        </p:column>
+                        
+                        <p:column id="secondLastName" filterBy="#{alumno.user.secondLastName}"   
+                                headerText="Apellido materno"  
+                                filterMatchMode="contains">  
+                            <h:outputText value="#{alumno.user.secondLastName}" />  
+                        </p:column>
+                        
+                        <p:column id="programName" filterBy="#{alumno.programCode.programName}"   
+                                headerText="Carrera" 
+                                filterOptions="#{student.programOptions}"  
+                                filterMatchMode="exact">  
+                            <h:outputText value="#{alumno.programCode.programName}" />  
+                        </p:column>
+                        
+                        <p:column headerText="" >
+                            <p:commandLink value="  " title="Ver datos del alumno" styleClass="ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{student.viewDetails(alumno.rut)}">
+                            </p:commandLink>
+                        </p:column>
+                        
+                        <p:column headerText="" rendered="#{courseMB.showBtnAdd}">
+                            <p:commandLink value="  " title="Modificar datos del alumno" styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" action="#{student.edit(alumno.rut)}">
+                            </p:commandLink>
+                        </p:column>
+                        
+                        <p:column headerText="" rendered="#{courseMB.showBtnAdd}">
+                            <p:commandLink value="  " title="Eliminar este alumno" styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cd_#{alumno.rut}.show();" />
+                                
+                            <p:confirmDialog message="¿Está seguro que desea eliminar al estudiante?"
+                                                 header="Confirmación de eliminación de estudiante" severity="alert"
+                                                 widgetVar="cd_#{alumno.rut}" id="cd" closeOnEscape="true">
+                            <p:commandButton value="Si" actionListener="#{student.delete(alumno.rut)}"
+                                                     oncomplete="cd_#{alumno.rut}.hide()" ajax="false" />
+                            <p:commandButton value="No" onclick="cd_#{alumno.rut}.hide()" type="button" />
+                            
+                            </p:confirmDialog>
+                        </p:column>
+                        <p:column headerText="" rendered="true">
+                            <p:commandLink value=" " title="Fotos del estudiante" styleClass=" ui-btn ui-icon-shadow ui-icon-image ui-icon" action="#{student.photos(alumno.rut)}" />
+                       </p:column>
+                        
+                        <p:column headerText="" rendered="true">
+                            <p:commandLink value="  " title="Asignar persona a un grupo" styleClass=" ui-btn ui-icon-shadow ui-icon-person ui-icon" action="#{student.teamStudent(alumno.rut)}">
+                            </p:commandLink>
+                        </p:column>
+                        
+                    </p:dataTable>       
+                    <f:facet name="footer">
+                        <p:commandButton value="Agregar estudiante" action="#{student.add()}" rendered="#{courseMB.showBtnAdd}"/>  
+                    </f:facet>
+                    </p:panelGrid>
+                    <p:contextMenu beforeShow="pcontext.show()" />
+                </h:form>
+            </ui:define>
+        </ui:composition>       
+    </body>   
+</html>

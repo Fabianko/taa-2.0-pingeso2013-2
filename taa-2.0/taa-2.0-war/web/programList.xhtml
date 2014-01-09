@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      contentType="text/html">
+    
+    <body>
+         <ui:composition template="templates/newTemplate.xhtml">
+            <ui:define name="titulo">
+                Carreras
+            </ui:define>
+            <ui:define name="content">
+                <h:form> 
+                    <p:panelGrid columns="5" styleClass="centrar" style="width: 100%;" >
+                    <f:facet name="header">Listado de carreras</f:facet>
+                    <p:dataTable var="anyProgram" value="#{programMB.list}" widgetVar="programsTable" paginator="true" paginatorAlwaysVisible="false" rows="10" rowKey="#{anyProgram.code}" paginatorPosition="bottom"
+                                 emptyMessage="No hay carreras para mostrar" filteredValue="#{programMB.filteredPrograms}">
+                        
+                        <f:facet name="header">  
+                            <p:outputPanel>  
+                                <h:outputText value="Búsqueda global:" />  
+                                <p:inputText id="globalFilter" onkeyup="programsTable.filter()" style="width:150px" />  
+                            </p:outputPanel>  
+                        </f:facet>
+                        
+                        <p:column id="codeProgram" filterBy="#{anyProgram.programCode}"   
+                                headerText="Código carrera" 
+                                filterMatchMode="contains">  
+                            <h:outputText value="#{anyProgram.programCode}" />  
+                        </p:column> 
+                        
+                        <p:column id="programName" filterBy="#{anyProgram.programName}"   
+                                headerText="Nombre carrera" 
+                                filterMatchMode="contains">  
+                            <h:outputText value="#{anyProgram.programName}" />  
+                        </p:column> 
+                        
+                        <p:column id="levels" filterBy="#{anyProgram.levels}"   
+                                headerText="Duración (Semestres)" 
+                                filterMatchMode="contains">  
+                            <h:outputText value="#{anyProgram.levels}" />  
+                        </p:column> 
+ 
+                        <p:column headerText="" >
+                            <p:commandLink value="  " title="Ver Datos de carrera" styleClass="ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{programMB.viewDetailsProgram(anyProgram.programCode)}">
+                            </p:commandLink>
+                        </p:column>
+                        
+                        <p:column headerText=""  rendered="#{courseMB.showBtnAdd}">
+                            <p:commandLink value="  " title="Modificar esta Carrera" styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" action="#{programMB.edit(anyProgram.programCode)}">
+                            </p:commandLink>
+                        </p:column>
+
+                        <p:column headerText="" rendered="#{courseMB.showBtnAdd}">
+                            <p:commandLink value="  " title="Eliminar esta carrera" styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cd_#{anyProgram.programCode}.show();" />
+                                
+                            <p:confirmDialog message="¿Está seguro que desea eliminar la carrera?"
+                                                 header="Confirmación de eliminación de carrera" severity="alert"
+                                                 widgetVar="cd_#{anyProgram.programCode}" id="cd" closeOnEscape="true">
+                            <p:commandButton value="Si" actionListener="#{programMB.delete(anyProgram.programCode)}"
+                                                     oncomplete="cd_#{anyProgram.programCode}.hide()" ajax="false" />
+                            <p:commandButton value="No" onclick="cd_#{anyProgram.programCode}.hide()" type="button" />
+                            
+                            </p:confirmDialog>
+                        </p:column>
+                    </p:dataTable>       
+                    <f:facet name="footer">
+                        <p:commandButton value="Agregar carrera" action="#{programMB.add()}" rendered="#{courseMB.showBtnAdd}"/>  
+                    </f:facet>
+                    </p:panelGrid>
+                    <p:contextMenu beforeShow="pcontext.show()" />
+                </h:form>
+            </ui:define>
+        </ui:composition>       
+    </body>   
+</html>

@@ -1,0 +1,60 @@
+
+#top {
+    position: relative;
+    
+    color: white;
+    padding: 0px;
+    margin: 0px 0px 0px 0px;
+}
+
+
+
+#left {
+    float: left;
+    
+    padding: 5px;
+    width: 150px;
+}
+
+#right {
+    float: right;
+    position:relative;
+    
+    padding:5px;
+   
+    width: 150px;
+}
+
+.center_content {
+    position: relative;
+    
+    padding: 5px;
+}
+
+.left_content {
+    background-color: #dddddd;
+    padding: 5px;
+    margin-left: 0px;
+}
+
+.right_content {
+    position: relative;
+    left:  0px;
+    
+    padding: 0px;
+    margin: 0px 0px 0px 200px;
+}
+
+#top a:link, #top a:visited {
+  color: white;
+  font-weight : bold;
+  text-decoration: none;
+}
+
+#top a:link:hover, #top a:visited:hover  {
+  
+  font-weight : bold;
+  text-decoration : underline;
+}
+
+

@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="/templates/newTemplate.xhtml">
+
+            <ui:define name="titulo">
+                Lista de asistencia
+            </ui:define>
+
+            <ui:define name="btnsBar">
+                btnsBar
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form id="form">  
+
+                    <p:contextMenu for="students" widgetVar="cMenu">  
+                        
+                    </p:contextMenu>
+                    
+                    
+
+                    <p:dataTable  id="students" var="student" rowKey="#{student.attendancePK.rut}" paginator="true" value="#{attendanceStudents.attendanceList}" editable="true" editMode="cell" widgetVar="studentsTable" rows="10" selection="#{attendanceStudents.selectedUser}" selectionMode="single" filteredValue="#{attendanceStudents.filteredUsers}">
+
+                  
+                     <!--   <p:ajax event="rowSelect" update="messages " oncomplete="studentDialog.show()" />  -->
+
+                        
+                        <f:facet name="header">  
+                            Lista de asistencia
+                        </f:facet>  
+
+                        <!--p:ajax event="cellEdit" listener="#{attendanceStudents.onCellEdit}" update="messages"/>-->
+
+                        <p:column headerText="Rut" style="width:10%"  sortBy="rut" filterBy="rut">  
+                            <p:cellEditor>  
+                                <f:facet name="output"><h:outputText value="#{student.attendancePK.rut}" /></f:facet>  
+                                <f:facet name="input"><p:inputText id="rutInput" value="#{student.attendancePK.rut}" style="width:96%" disabled="true"/></f:facet>  
+                            </p:cellEditor>  
+                        </p:column>
+
+                        <p:column headerText="Primer nombre" style="width:10%" sortBy="name1" filterBy="name1">  
+                            <p:cellEditor>  
+                                <f:facet name="output"><h:outputText value="#{student.student.user.firstName}" /></f:facet>  
+                                <f:facet name="input"><p:inputText id="name1Input" value="#{student.student.user.firstName}" style="width:96%" disabled="true"/></f:facet>  
+                            </p:cellEditor>  
+                        </p:column>
+
+                        <p:column headerText="Apellido paterno" style="width:10%" sortBy="lastnamep" filterBy="lastnamep">  
+                            <p:cellEditor>  
+                                <f:facet name="output"><h:outputText value="#{student.student.user.primaryLastName}" /></f:facet>  
+                                <f:facet name="input"><p:inputText id="lastnamepInput" value="#{student.student.user.primaryLastName}" style="width:96%" disabled="true"/></f:facet>  
+                            </p:cellEditor>  
+                        </p:column>
+
+                        <p:column headerText="Apellido materno" style="width:10%" sortBy="lastnamem" filterBy="lastnamem">  
+                            <p:cellEditor>  
+                                <f:facet name="output"><h:outputText value="#{student.student.user.secondLastName}" /></f:facet>  
+                                <f:facet name="input"><p:inputText id="lastnamemInput" value="#{student.student.user.secondLastName}" style="width:96%;" disabled="true"/></f:facet>  
+                            </p:cellEditor>  
+                        </p:column>
+                        <p:column headerText="Curso" style="width:10%" sortBy="course" filterBy="course">  
+                            <p:cellEditor>  
+                                <f:facet name="output"><h:outputText value="#{student.course.courseName}" /></f:facet>  
+                                <f:facet name="input"><p:inputText id="coursenameInput" value="#{student.course.courseName}" style="width:96%;" disabled="true"/></f:facet>  
+                            </p:cellEditor>  
+                        </p:column>
+                                             <p:column headerText="Codigo" style="width:10%" sortBy="codigo" filterBy="codigo">  
+                            <p:cellEditor>  
+                                <f:facet name="output"><h:outputText value="#{student.course.courseCode}" /></f:facet>  
+                                <f:facet name="input"><p:inputText id="coursecodeInput" value="#{student.course.courseCode}" style="width:96%;" disabled="true"/></f:facet>  
+                            </p:cellEditor>  
+                        </p:column>
+                        <p:column headerText="Estado de Asistencia" style="width:10%" sortBy="present" filterBy="present"> 
+
+                          
+                            <!--<p:selectBooleanCheckbox value="#{attendanceStudents.value2}">  
+                                <p:ajax update="msg" listener="#{attendanceStudents.addMessage}"/>  
+                            </p:selectBooleanCheckbox>--> 
+                            <p:selectOneRadio id="options" value="#{attendanceStudents.number}">  
+                                <f:selectItem itemLabel="Presente" itemValue="1" />
+         
+                            </p:selectOneRadio>
+
+                          
+                        </p:column>
+
+                    </p:dataTable>
+
+                    <p:commandButton id="submitButton" value="Grabar Asistencia" update="display"/> 
+    
+                    <p:dialog header="Detalle del estudiante" widgetVar="studentDialog" resizable="false"  
+                              width="200" showEffect="explode" hideEffect="explode">  
+
+                        <h:panelGrid id="display" columns="2" cellpadding="4" width="100%">  
+
+                            <f:facet name="header">  
+                               <!-- <p:graphicImage value="/resources/img/{attendanceStudents.selectedUser.rut}.jpg"/>-->
+                                <!--<p:graphicImage value="/resources/img/{attendanceStudents.selectedUser.rut}.jpg"/>-->  
+                            </f:facet>  
+
+                            <h:outputText value="Rut:" />  
+                            <h:outputText value="#{attendanceStudents.selectedUser.rut}" id="rut"/>  
+
+                            <h:outputText value="Primer nombre:" />  
+                            <h:outputText value="#{attendanceStudents.selectedUser.firstName}" id="name1"/>  
+
+                            <h:outputText value="Segundo nombre:" />  
+                            <h:outputText value="#{attendanceStudents.selectedUser.middleName}" id="name2"/>  
+
+                            <h:outputText value="Apellido paterno:" />  
+                            <h:outputText value="#{attendanceStudents.selectedUser.primaryLastName}" id="lastnamep"/>
+
+                            <h:outputText value="Apellido materno:" />  
+                            <h:outputText value="#{attendanceStudents.selectedUser.secondLastName}" id="lastnamem"/>
+                        </h:panelGrid>  
+                        
+                        
+                        
+                        
+                    </p:dialog>
+                </h:form>    
+            </ui:define>
+
+            <f:facet name="footer">
+
+            </f:facet>
+
+        </ui:composition>
+
+    </body>
+</html>

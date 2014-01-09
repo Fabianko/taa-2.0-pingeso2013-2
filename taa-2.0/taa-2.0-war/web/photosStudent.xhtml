@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      contentType="text/html">
+    
+    <body>
+         <ui:composition template="templates/newTemplate.xhtml">
+            <ui:define name="titulo">
+                Fotos estudiante
+            </ui:define>
+            <ui:define name="content">
+                
+                <h:form> 
+                    <p:panelGrid columns="5" styleClass="centrar" style="width: 100%;" >
+                        <f:facet name="header">Fotos estudiante rut #{studentConversation.idUserDetails}</f:facet>
+                        <p:dataTable var="photo" value="#{photoMB.photoList}" widgetVar="photosTable" paginator="true" paginatorAlwaysVisible="false" rows="10" rowKey="#{photo.photoId}" paginatorPosition="bottom"
+                                 emptyMessage="No hay fotos para mostrar" filteredValue="#{photoMB.photoFiltered}">
+                        
+                            <p:column id="phptoName"  
+                                headerText="Nombre fotografía">  
+                                <h:outputText value="#{photo.photoPath}" />  
+                        </p:column>  
+                        
+                       <!-- <p:column headerText="" rendered="true">
+                            <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-disk ui-icon" onclick="photoView.show();">
+                            </p:commandLink>
+                            <p:dialog header="Fotografía" widgetVar="photoView" modal="true"
+                                visible="false" resizable="false">
+                                <p:panel style="text-align: center;">
+                                    <img src="../9042-134576340.png"/>
+                                </p:panel>
+                                <p:panel style="text-align: center">
+                                    <p:commandButton style="text-align: center;" type="button" value="Cerrar">
+                                    <p:ajax oncomplete="photoView.hide();"/>
+                                </p:commandButton>
+                            </p:panel>
+                            </p:dialog>
+                        </p:column>
+                        -->
+                        <p:column headerText="" rendered="true">
+                            <p:commandLink value="  " styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cdPhoto_#{photo.photoId}.show();" />
+                                
+                            <p:confirmDialog message="¿Está seguro que desea eliminar la fotografía?"
+                                                 header="Confirmación de eliminación de fotografía" severity="alert"
+                                                 widgetVar="cdPhoto_#{photo.photoId}" id="cdPhoto" closeOnEscape="true">
+                            <p:commandButton value="Si" actionListener="#{photoMB.deletePhoto(photo.photoId)}"
+                                                     oncomplete="cdPhoto_#{photo.photoId}.hide()" ajax="false" />
+                            <p:commandButton value="No" onclick="cdPhoto_#{photo.photoId}.hide();" type="button" />
+                            </p:confirmDialog>
+                        </p:column>
+                        
+                    </p:dataTable>       
+                    <f:facet name="footer">
+                        <p:commandButton value="Agregar fotografía" onclick="photoDialogPhoto.show()" rendered="#{photoMB.maxPhotos()}" />  
+                        <p:commandButton immediate="true" value="Volver" action="#{photoMB.backToStudents()}"/>                         
+                    </f:facet>
+                    </p:panelGrid>
+                    <p:dialog header="Captura estudiante" widgetVar="photoDialogPhoto" modal="true"
+                            visible="false" resizable="false">
+                            <p:panel style="text-align: center;">
+                            <br/>
+                            Por favor mira de frente a la cámara sin sonreír ni mover la cabeza.
+                            <br/>
+                            A una distancia aproximada de 60 cms
+                            <br/>
+                            (Que tu rostro ocupe la mayoría del cuadro).
+                            <br/>
+                            <br/>
+                            <p:photoCam widgetVar="pc" listener="#{photoMB.oncapture}"/>
+                            <br/>
+                            </p:panel>
+                            <p:panel style="text-align: center">
+                                <p:commandButton style="text-align: center;" type="button" value="Fotografiar"
+                                onclick="pc.capture()">
+                                <p:ajax oncomplete="photoDialogPhoto.hide();"/>
+                            </p:commandButton>
+                            </p:panel>
+                    </p:dialog>
+                    <p:contextMenu beforeShow="pcontext.show()" />
+                </h:form>
+            </ui:define>
+        </ui:composition>       
+    </body>   
+</html>

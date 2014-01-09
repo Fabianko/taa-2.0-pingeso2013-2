@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <body>
+        
+        <ui:composition template="./templates/newTemplate.xhtml">
+            
+            <ui:define name="titulo">
+                Detalle carrera
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                     <p:panelGrid columns="2" styleClass="centrar">
+                         <f:facet name="header">Datos de la carrera</f:facet>
+                         
+                         <p:outputLabel value="Código carrera"/>
+                         <p:outputLabel value="#{programDetailsMB.code}"/>
+                         
+                         <p:outputLabel value="Nombre carrera"/>
+                         <p:outputLabel value="#{programDetailsMB.name}"/>
+                         
+                         <p:outputLabel value="Duración (Semestres)"/>
+                         <p:outputLabel value="#{programDetailsMB.levels}"/>
+                         
+                         <f:facet name="footer">   
+                             <p:commandButton value="Volver" immediate="true" action="#{programDetailsMB.backToPrograms()}"/>                         
+                         </f:facet>
+                     </p:panelGrid>                
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

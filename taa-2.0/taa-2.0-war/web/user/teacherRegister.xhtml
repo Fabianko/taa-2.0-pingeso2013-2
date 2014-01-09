@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      contentType="text/html">
+    
+    <body>
+         <ui:composition template="/templates/newTemplate.xhtml">
+            <ui:define name="titulo">
+                Registrar Profesores
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <p:panelGrid columns="2" styleClass="toCentre"  style="margin-top: 20px; width: 40%;">
+                        <f:facet name="header"><div style="text-align: left; font-size: 11pt; font-family: arial, Helvetica, sans-serif; height: 30px; line-height: 30px; text-align: center;">Complete los datos del profesor</div></f:facet>
+                        <p:outputLabel style="text-align: left; font-size: 10pt; font-family: arial, Helvetica, sans-serif; width: 20%; font-weight: bold;" value="Rut" for="rut"/>
+                        <p:inputText id="rut" value="#{teacherRegister.rut}" required="true" requiredMessage="Rut es obligatorio." maxlength="9" style="font-size: 10pt; font-family: arial, Helvetica, sans-serif; width:200px;">
+                            <f:validator validatorId="RutValidator" for="rut"/>
+                        </p:inputText>
+                         
+                        <p:outputLabel style="text-align: left; font-size: 10pt; font-family: arial, Helvetica, sans-serif; width: 20%; font-weight: bold;" value="Primer nombre" for="name1"/>
+                        <p:inputText id="name1" value="#{teacherRegister.name1}" required="true" maxlength="20" style="font-size: 10pt; font-family: arial, Helvetica, sans-serif; width: 200px;" requiredMessage="Primer nombre es obligatorio."/>
+
+                        <p:outputLabel style="text-align: left; font-size: 10pt; font-family: arial, Helvetica, sans-serif; width: 20%; font-weight: bold;" value="Segundo nombre" for="name2"/>
+                        <p:inputText id="name2" value="#{teacherRegister.name2}" required="false" maxlength="20" style="font-size: 10pt; font-family: arial, Helvetica, sans-serif; width: 200px;"/>
+
+                        <p:outputLabel style="text-align: left; font-size: 10pt; font-family: arial, Helvetica, sans-serif; width: 20%; font-weight: bold;" value="Apellido paterno" for="lastnamep"/>
+                        <p:inputText id="lastnamep" value="#{teacherRegister.lastNameP}" required="true" maxlength="20" style="font-size: 10pt; font-family: arial, Helvetica, sans-serif; width: 200px;" requiredMessage="Apellido paterno es obligatorio."/>
+
+                        <p:outputLabel style="text-align: left; font-size: 10pt; font-family: arial, Helvetica, sans-serif; width: 20%; font-weight: bold;" value="Apellido materno" for="lastnamem"/>
+                        <p:inputText id="lastnamem" value="#{teacherRegister.lastNameM}" required="false" maxlength="20" style="font-size: 10pt; font-family: arial, Helvetica, sans-serif; width: 200px;"/>
+
+                        <p:outputLabel style="text-align: left; font-size: 10pt; font-family: arial, Helvetica, sans-serif; width: 20%; font-weight: bold;" value="Correo electrónico" for="email"/>
+                        <p:inputText id="email" value="#{teacherRegister.email}" required="true" maxlength="40" style="font-size: 10pt; font-family: arial, Helvetica, sans-serif; width: 200px;" requiredMessage="Correo electrónico es obligatorio.">
+                            <f:validator validatorId="EmailValidator"/>
+                        </p:inputText>
+                       
+                        <p:outputLabel  style="text-align: left; font-size: 10pt; font-family: arial, Helvetica, sans-serif; width: 20%; font-weight: bold;" value="Password" for="pass"/>
+                        <p:password id="pass" value="#{teacherRegister.pass}" required="true" maxlength="20" />
+
+                        <f:facet name="footer">
+                        <div style="text-align: left; font-size: 10pt; font-family: arial, Helvetica, sans-serif; margin-left: 40.8%;">
+                            <p:commandButton value="Guardar" ajax="false" action="#{teacherRegister.teacherRegisterNow()}"/>
+                            <p:commandButton immediate="true" value="Limpiar" type="reset"/>                         
+                        </div>
+                        </f:facet>
+                    </p:panelGrid>                
+                </h:form>          
+            </ui:define>
+        </ui:composition>       
+    </body>   
+</html>

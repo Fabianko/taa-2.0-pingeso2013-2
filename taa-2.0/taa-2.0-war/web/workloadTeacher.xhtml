@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <body>
+
+        <ui:composition template="./templates/newTemplate.xhtml">
+
+            <ui:define name="titulo">
+                Carga horaria del Profesor
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                <p:panelGrid columns="3" styleClass="centrar" style="width: 100%;">
+                    <f:facet name="header">Horario del profesor</f:facet>
+                     <p:dataTable var="curso" value="#{courseMB.courseList}" widgetVar="coursesTable" paginator="true" paginatorAlwaysVisible="false" rows="10" rowKey="#{curso.courseCode}" paginatorPosition="bottom"
+                                 emptyMessage="No hay cursos para mostrar" filteredValue="#{courseMB.courseFiltered}">
+                        
+                        <f:facet name="header">  
+                            <p:outputPanel>  
+                                <h:outputText value="Búsqueda global:" />  
+                                <p:inputText id="globalFilter" onkeyup="coursesTable.filter()" style="width:150px" />  
+                            </p:outputPanel>  
+                        </f:facet>
+                        
+                        <p:column id="courseCode" filterBy="#{curso.courseCode}"   
+                                headerText="Código curso" 
+                                filterMatchMode="contains">  
+                            <h:outputText value="#{curso.courseCode}" />  
+                        </p:column> 
+                        
+                        <p:column id="courseName" filterBy="#{curso.courseName}"   
+                                headerText="Nombre curso"  
+                                filterMatchMode="contains">  
+                            <h:outputText value="#{curso.courseName}" />  
+                        </p:column>  
+                         <p:column id="workload">                            
+                             <h:outputText value="#{curso.workload}" />  
+                         </p:column>
+                    </p:dataTable>   
+                </p:panelGrid>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+        
+        <ui:composition template="./templates/newTemplate.xhtml">
+            
+            <ui:define name="titulo">
+                Modificar carrera
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                     <p:panelGrid columns="2" styleClass="centrar">
+                         <f:facet name="header">Datos de la carrera</f:facet>
+                         
+                         <p:outputLabel value="Código carrera"/>
+                         <p:inputText value="#{programEditMB.programCode}" disabled="true" readonly="true"/>
+                         
+                         <p:outputLabel value="Nombre carrera" for="programName"/>
+                         <p:inputText id="programName" value="#{programEditMB.programName}" required="true" requiredMessage="Nombre de carrera es obligatorio.">
+                         </p:inputText>
+                         
+                         <p:outputLabel value="Duración (Semestres)" for="duration"/>
+                         <p:inputText id="duration" value="#{programEditMB.levels}" required="true" requiredMessage="Duración (Semestres) carrera es obligatorio.">
+                             <f:validator validatorId="levelsProgramValidator"/>
+                         </p:inputText>
+                         
+                         <f:facet name="footer">
+                             <p:commandButton value="Guardar" ajax="false" action="#{programEditMB.saveProgram()}"/>
+                             <p:commandButton value="Volver" immediate="true" action="#{programEditMB.backToPrograms()}"/>                         
+                         </f:facet>
+                     </p:panelGrid>                
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

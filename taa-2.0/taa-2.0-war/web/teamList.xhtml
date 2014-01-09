@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      contentType="text/html">
+    
+    <body>
+         <ui:composition template="templates/newTemplate.xhtml">
+            <ui:define name="titulo">
+                Grupos de trabajo
+            </ui:define>
+            <ui:define name="content">
+                <h:form> 
+                    <p:panelGrid columns="5" styleClass="centrar" style="width: 100%;" >
+                    <f:facet name="header">Listado grupos de trabajo</f:facet>
+                    <p:dataTable var="anyTeam" value="#{teamMB.list}" widgetVar="teamsTable" paginator="true" paginatorAlwaysVisible="false" rows="10" rowKey="#{anyTeam.code}" paginatorPosition="bottom"
+                                 emptyMessage="No hay grupos de trabajo para mostrar" filteredValue="#{teamMB.filteredTeams}">
+                        
+                        <f:facet name="header">  
+                            <p:outputPanel>  
+                                <h:outputText value="Búsqueda global:" />  
+                                <p:inputText id="globalFilter" onkeyup="teamsTable.filter();" style="width:150px" />  
+                            </p:outputPanel>  
+                        </f:facet>
+                        
+                                              
+                        <p:column id="teamName" filterBy="#{anyTeam.teamName}"   
+                                headerText="Nombre grupo" 
+                                filterMatchMode="contains">  
+                            <h:outputText value="#{anyTeam.teamName}" />  
+                        </p:column> 
+                        
+                        <p:column id="levels" filterBy="#{anyTeam.creationDate}"   
+                                headerText="Fecha de creación" 
+                                filterMatchMode="contains">  
+                            <h:outputText id="dateN" value="#{anyTeam.creationDate}">
+                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="GMT-3"/>
+                            </h:outputText>
+                        </p:column> 
+ 
+                        <p:column headerText="" >
+                            <p:commandLink value="  "  title="Ver datos del grupo" styleClass="ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{teamMB.viewDetailsTeam(anyTeam.teamId)}">
+                            </p:commandLink>
+                        </p:column>
+                        
+                        <p:column headerText="" rendered="true">
+                            <p:commandLink value="  " title="Modificar datos del grupo" styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" action="#{teamMB.edit(anyTeam.teamId)}">
+                            </p:commandLink>
+                        </p:column>
+
+                        <p:column headerText="" rendered="true">
+                            <p:commandLink value="  " title="Eliminar este grupo" styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cd_#{anyTeam.teamId}.show();" />
+                                
+                            <p:confirmDialog message="¿Está seguro que desea eliminar el grupo de trabajo?"
+                                                 header="Confirmación de eliminación de grupo de trabajo" severity="alert"
+                                                 widgetVar="cd_#{anyTeam.teamId}" id="cd" closeOnEscape="true">
+                            <p:commandButton value="Si" actionListener="#{teamMB.delete(anyTeam.teamId)}"
+                                                     oncomplete="cd_#{anyTeam.teamId}.hide()" ajax="false" />
+                            <p:commandButton value="No" onclick="cd_#{anyTeam.teamId}.hide();" type="button" />
+                            
+                            </p:confirmDialog>
+                        </p:column>
+                    </p:dataTable>       
+                    <f:facet name="footer">
+                        <p:commandButton value="Agregar grupo de trabajo" action="#{teamMB.add()}" rendered="true"/>  
+                    </f:facet>
+                    </p:panelGrid>
+                    <p:contextMenu beforeShow="pcontext.show()" />
+                </h:form>
+            </ui:define>
+        </ui:composition>       
+    </body>   
+</html>

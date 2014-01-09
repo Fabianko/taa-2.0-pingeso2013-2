@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <f:facet name="first">
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <link href="./../resources/css/default.css" rel="stylesheet" type="text/css" />
+            <link href="./../resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
+            <link rel="shortcut icon" href="https://addons.cdn.mozilla.net/favicon.ico"/>
+            <title><ui:insert name="titulo">Toma Asistencia Alumnos</ui:insert></title>
+        </f:facet>
+    </h:head>
+
+    <h:body style="background-color: black;">
+        <div id="top">
+            <div class="span2 text-right" style="background-color:black; margin-bottom: 15px;">
+                <h:graphicImage  alt="Toma Asistencia Alumnos" width="100%" height="120px" url="/resources/img/Header.png"/>
+            </div>
+        </div>
+        <div>
+            <div id="left">
+                <h:form rendered="#{request.isUserInRole('Profesor')}">
+                    <p:button value="Home" href="/faces/index.xhtml"  style="width:185px; background-color: #009900;" icon="ui-icon-home"/>
+                    <p:menu style="width:175px; background-color: #009900;"><p:submenu label="MENU"  icon="ui-icon-home"/> </p:menu>
+                    <p:tieredMenu style="width:175px; background-color: #009900; margin-bottom: 200px;" >
+                        <p:menuitem value="Mis cursos" url="/faces/classList.xhtml" icon="ui-icon-note"/>
+                        <p:menuitem value="Estudiantes" url="/faces/studentList.xhtml" icon="ui-icon-person"/>
+                        <p:menuitem value="Carga horaria" url="/faces/workloadTeacher.xhtml" icon="ui-icon-disk" />
+                        <p:menuitem value="Profesores" url="/faces/teacherList.xhtml" icon="ui-icon-disk"/>
+                        <p:menuitem value="Carreras" url="/faces/programList.xhtml" icon="ui-icon-calendar"/>
+                        <p:menuitem value="Grupos" url="/faces/teamList.xhtml" icon="ui-icon-image" style="margin-bottom: 120px;"/>
+                    </p:tieredMenu >
+                </h:form>
+                
+                <h:form rendered="#{request.isUserInRole('Administrador')}">
+                    <p:button value="Home" href="/faces/index.xhtml"  style="width:185px; background-color: #009900; " icon="ui-icon-home"/>
+                    <p:menu style="width:175px; background-color: #009900;"><p:submenu label="MENU"  icon="ui-icon-home"/> </p:menu>
+                    <p:tieredMenu style="width:175px; background-color: #009900; margin-bottom: 200px;">
+                        <p:menuitem value="Cursos" url="/faces/classList.xhtml" icon="ui-icon-note"/>
+                        <p:menuitem value="Estudiantes" url="/faces/studentList.xhtml" icon="ui-icon-person"/>
+                        <p:menuitem value="Carga horaria" url="/faces/workloadTeacher.xhtml" icon="ui-icon-disk" />
+                        <p:menuitem value="Profesores" url="/faces/teacherList.xhtml" icon="ui-icon-disk"/>
+                        <p:menuitem value="Carreras" url="/faces/programList.xhtml" icon="ui-icon-calendar"/>
+                        <p:menuitem value="Grupos" url="/faces/teamList.xhtml" icon="ui-icon-image" style="margin-bottom: 120px;"/>
+                    </p:tieredMenu >
+                </h:form>
+            </div>
+            <div>
+                <div id="right" style="margin-right:20px;">
+                    <h:form >
+                    <ui:insert name="right" >
+
+                        <p:menuButton style=" background-color: yellowgreen;" value="#{sessionValidator.username}"  >
+                            <p:menuitem value="Cambiar contraseña" icon="ui-icon-contact" url="/faces/passwordChange.xhtml" />
+                            <p:menuitem value="Cerrar Sesion" action="#{sessionValidator.logout()}" icon="ui-icon-close"/>   
+                        </p:menuButton>
+                              <p:separator />                  <p:clock pattern="HH:mm:ss dd.MM.yyyy" mode="server" />  
+                        
+                    </ui:insert>
+                   </h:form>     
+                </div>
+
+                <p:growl id="growl" showDetail="true" showSummary="false" sticky="true" /> 
+                <div id="content"  style="margin-left: 220px; display: -webkit-flex; display: flex;" class="right_content">
+                    <div style="margin: auto;">
+                        <ui:insert name="content" > 
+                            <br/>
+                        </ui:insert>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <div id="bottom">            
+            <div class="row-fluid">
+                <div class="span12 text-center">
+                    <ui:insert name="footerPage">
+                        <div style="text-align: left; font-size: 10pt; font-family: arial, Helvetica, sans-serif; height: 80px; margin-top: 55px;" >
+                            <h:graphicImage  alt="Toma " width="100%" height="40px" url="/resources/img/img06.png" style="position: fixed; bottom: 0; right: 0;"/>                        </div>
+                    </ui:insert>
+                </div>
+            </div>
+        </div>
+
+    </h:body>
+
+</html>
