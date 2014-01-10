@@ -5,7 +5,15 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-
+    
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+        $('#content').hide();
+        $('#content').fadeIn(1000);
+        });
+    </script>
+    
     <h:head>
         <f:facet name="first">
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
