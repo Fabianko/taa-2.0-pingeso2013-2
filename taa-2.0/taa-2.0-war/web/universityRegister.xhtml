@@ -18,8 +18,8 @@
                      <p:panelGrid columns="2" styleClass="centrar">
                          <f:facet name="header">Ingrese datos de la universidad</f:facet>
 
-                         <p:outputLabel value="Rut universidad" for="rutUniversity"/>
-                         <p:inputText id="rutUniversity" value="#{universityRegisterMB.rutUniversity}" required="true" maxlength="13" size="35" requiredMessage="Rut universidad es obligatorio.">
+                         <p:outputLabel value="Rut universidad"  for="rutUniversity"/>
+                         <p:inputText id="rutUniversity" title="Ingresar rut sin puntos ni guion, en caso de ser K, remplazar por 0" value="#{universityRegisterMB.rutUniversity}" required="true" maxlength="13" size="35" requiredMessage="Rut universidad es obligatorio.">
                              <f:validator validatorId="RutValidatorUniversity"/>
                          </p:inputText>
 
