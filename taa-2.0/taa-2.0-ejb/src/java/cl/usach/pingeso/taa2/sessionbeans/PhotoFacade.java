@@ -16,14 +16,15 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Nico
+ * @author Diego
  */
 @Stateless
 public class PhotoFacade extends AbstractFacade<Photo> implements PhotoFacadeLocal {
-    @EJB
-    private StudentFacadeLocal studentFacade;
     @PersistenceContext(unitName = "taa-2.0-ejbPU")
     private EntityManager em;
+    @EJB
+    private StudentFacadeLocal studentFacade;
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;

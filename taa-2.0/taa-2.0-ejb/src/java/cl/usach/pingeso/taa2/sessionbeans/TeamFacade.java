@@ -13,7 +13,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Nico
+ * @author Diego
  */
 @Stateless
 public class TeamFacade extends AbstractFacade<Team> implements TeamFacadeLocal {
@@ -41,5 +41,5 @@ public class TeamFacade extends AbstractFacade<Team> implements TeamFacadeLocal 
             return null;
         }
         return res;
-    }  
+    }
 }

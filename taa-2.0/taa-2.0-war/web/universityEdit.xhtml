@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+        
+        <ui:composition template="./templates/newTemplate.xhtml">
+            
+            <ui:define name="titulo">
+                Modificar universidad
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                     <p:panelGrid columns="2" styleClass="centrar">
+                         <f:facet name="header">Datos universidad</f:facet>
+                         
+                         <p:outputLabel value="Rut universidad"/>
+                         <p:inputText size="35" maxlength="13" value="#{universityEditMB.universityRut}" disabled="true" readonly="true"/>
+                         
+                         <p:outputLabel value="Nombre universidad" for="name1"/>
+                         <p:inputText id="name1" size="35" maxlength="50" value="#{universityEditMB.universityName}" required="true" requiredMessage="Nombre universidad es obligatorio."/>
+                         
+                         <p:outputLabel value="Dirección casa central" for="adress"/>
+                         <p:inputText id="adress" size="35" maxlength="100" value="#{universityEditMB.universityAdress}"/>
+                         
+                         <p:outputLabel value="Teléfono" for="phone"/>
+                         <p:inputText id="phone" size="35" maxlength="30" value="#{universityEditMB.universityPhone}"/>
+                         
+                         <p:outputLabel value="E-mail" for="email"/>
+                         <p:inputText id="email" size="35" maxlength="100" value="#{universityEditMB.universityEmail}"/>
+                         
+                         <f:facet name="footer">
+                             <p:commandButton value="Guardar" ajax="false" action="#{universityEditMB.saveUniversity()}"/>
+                             <p:commandButton value="Volver" immediate="true" action="#{universityEditMB.backToUniversities()}"/>                         
+                         </f:facet>
+                     </p:panelGrid>                
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

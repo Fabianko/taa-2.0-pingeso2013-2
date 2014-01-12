@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -38,6 +39,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "CourseHistory.findByPresentsTotal", query = "SELECT c FROM CourseHistory c WHERE c.presentsTotal = :presentsTotal"),
     @NamedQuery(name = "CourseHistory.findByHistoryState", query = "SELECT c FROM CourseHistory c WHERE c.historyState = :historyState")})
 public class CourseHistory implements Serializable {
+    @JoinColumns({
+        @JoinColumn(name = "TIMETABLE_CODE", referencedColumnName = "TIMETABLE_CODE"),
+        @JoinColumn(name = "BLOCK_NUMBER", referencedColumnName = "BLOCK_NUMBER"),
+        @JoinColumn(name = "BLOCK_DAY", referencedColumnName = "BLOCK_DAY")})
+    @ManyToOne
+    private Block block;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -143,6 +150,14 @@ public class CourseHistory implements Serializable {
     @Override
     public String toString() {
         return "cl.usach.pingeso.taa2.entityclasses.CourseHistory[ historyId=" + historyId + " ]";
+    }
+
+    public Block getBlock() {
+        return block;
+    }
+
+    public void setBlock(Block block) {
+        this.block = block;
     }
     
 }

@@ -14,7 +14,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Nico
+ * @author Diego
  */
 @Stateless
 public class AssignmentFacade extends AbstractFacade<Assignment> implements AssignmentFacadeLocal {

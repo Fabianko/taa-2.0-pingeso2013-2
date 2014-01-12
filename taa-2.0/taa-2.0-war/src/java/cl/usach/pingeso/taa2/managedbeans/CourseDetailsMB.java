@@ -62,9 +62,9 @@ public class CourseDetailsMB {
         }
         this.code = courseSelect.getCourseCode();
         this.name = courseSelect.getCourseName();
-        this.room = courseSelect.getClassroom();
+        this.room = courseSelect.getMainClassroom();
         this.teacher = teacherSelect.getUser().getFirstName() + " " + teacherSelect.getUser().getPrimaryLastName() + " (" + teacherSelect.getRut() + ")";
-        this.workload= courseSelect.getWorkload();
+        //this.workload= courseSelect.getWorkload();
     }
     
     public void backToCourses() {

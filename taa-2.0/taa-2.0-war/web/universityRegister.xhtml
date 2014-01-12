@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      contentType="text/html">
+    
+    <body>
+         <ui:composition template="templates/newTemplate.xhtml">
+            <ui:define name="titulo">
+                Registrar universidad
+            </ui:define>
+            <ui:define name="content">
+                
+                <h:form>
+                     <p:panelGrid columns="2" styleClass="centrar">
+                         <f:facet name="header">Ingrese datos de la universidad</f:facet>
+
+                         <p:outputLabel value="Rut universidad" for="rutUniversity"/>
+                         <p:inputText id="rutUniversity" value="#{universityRegisterMB.rutUniversity}" required="true" maxlength="13" size="35" requiredMessage="Rut universidad es obligatorio.">
+                             <f:validator validatorId="RutValidatorUniversity"/>
+                         </p:inputText>
+
+                         <p:outputLabel value="Nombre" for="nombre"/>
+                         <p:inputText id="nombre" size="35" maxlength="50" value="#{universityRegisterMB.nameUniversity}" required="true" requiredMessage="Nombre universidad es obligatorio.">
+                             <f:validator validatorId="UniversityNameValidator"/>
+                         </p:inputText>
+                         
+                         <p:outputLabel value="Dirección casa central" for="adress"/>
+                         <p:inputText id="adress" size="35" maxlength="100" value="#{universityRegisterMB.adress}"/>
+
+                         <p:outputLabel value="Teléfono" for="phone"/>
+                         <p:inputText id="phone" size="35" maxlength="30" value="#{universityRegisterMB.phone}"/>
+
+                         <p:outputLabel value="E-mail" for="email"/>
+                         <p:inputText id="email" size="35" maxlength="100" value="#{universityRegisterMB.emailUniversity}">
+                             <f:validator validatorId="EmailValidatorUniversity"/>
+                         </p:inputText>
+                         
+                         <f:facet name="footer">
+                             <p:commandButton value="Guardar" ajax="false" action="#{universityRegisterMB.universityRegisterNow()}"/>
+                             <p:commandButton immediate="true" value="Volver" action="#{universityRegisterMB.backToUniversities()}"/>                         
+                         </f:facet>
+                         
+                    </p:panelGrid>
+                </h:form>
+            </ui:define>
+        </ui:composition>       
+    </body>   
+</html>

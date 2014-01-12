@@ -20,7 +20,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Nico
+ * @author Diego
  */
 @Stateless
 public class StudentFacade extends AbstractFacade<Student> implements StudentFacadeLocal {

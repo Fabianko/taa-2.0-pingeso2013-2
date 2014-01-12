@@ -10,7 +10,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author Nico
+ * @author Diego
  */
 @Local
 public interface TeacherFacadeLocal {

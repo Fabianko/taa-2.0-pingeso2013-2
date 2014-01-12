@@ -35,7 +35,7 @@ public class TeacherMB implements Serializable {
     
     @PostConstruct
     public void init() {        
-        this.list = teacherFacade.findAll();
+        //this.list = teacherFacade.findAll();
     }
     
     public List<Teacher> getList() {

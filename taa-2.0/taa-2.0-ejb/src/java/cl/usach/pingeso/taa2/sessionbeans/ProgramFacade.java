@@ -13,7 +13,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Nico
+ * @author Diego
  */
 @Stateless
 public class ProgramFacade extends AbstractFacade<Program> implements ProgramFacadeLocal {
@@ -24,7 +24,7 @@ public class ProgramFacade extends AbstractFacade<Program> implements ProgramFac
     protected EntityManager getEntityManager() {
         return em;
     }
-
+    
     public ProgramFacade() {
         super(Program.class);
     }
@@ -42,5 +42,4 @@ public class ProgramFacade extends AbstractFacade<Program> implements ProgramFac
         }
         return res;
     }
-    
 }

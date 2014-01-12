@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      contentType="text/html">
+    
+    <body>
+         <ui:composition template="templates/newTemplate.xhtml">
+            <ui:define name="titulo">
+                Universidades
+            </ui:define>
+            <ui:define name="content">
+                
+                <h:form> 
+                    <p:panelGrid columns="5" styleClass="centrar" style="width: 100%;" >
+                    <f:facet name="header">Listado de universidades</f:facet>
+                    <p:dataTable var="university" value="#{universityMB.universityList}" widgetVar="universitiesTable" paginator="true" paginatorAlwaysVisible="false" rows="10" rowKey="#{university.rutUniversity}" paginatorPosition="bottom"
+                                 emptyMessage="No hay universidades para mostrar" filteredValue="#{universityMB.universityFiltered}">
+                        
+                        <f:facet name="header">  
+                            <p:outputPanel>  
+                                <h:outputText value="Búsqueda global:" />  
+                                <p:inputText id="globalFilter" onkeyup="universitiesTable.filter();" style="width:150px" />  
+                            </p:outputPanel>  
+                        </f:facet>
+                        
+                        <p:column id="universityRut" filterBy="#{university.rutUniversity}"   
+                                headerText="Rut universidad" 
+                                filterMatchMode="contains">  
+                            <h:outputText value="#{university.rutUniversity}" />  
+                        </p:column> 
+          
+                        <p:column id="universityName" filterBy="#{university.universityName}"   
+                                headerText="Nombre universidad"  
+                                filterMatchMode="contains">  
+                            <h:outputText value="#{university.universityName}" />  
+                        </p:column>  
+                        
+                        <p:column headerText="" >
+                            <p:commandLink value="  " title="Ver datos universidad" styleClass="ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{universityMB.viewDetailsUniversity(university.rutUniversity)}">
+                            </p:commandLink>
+                        </p:column>
+                        
+                        <p:column headerText="" rendered="#{universityMB.showBtnUniversity}" >
+                            <p:commandLink value="  " title="Modificar datos universidad" styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" action="#{universityMB.editUniversity(university.rutUniversity)}">
+                            </p:commandLink>
+                        </p:column>
+                        
+                        <p:column headerText="" rendered="#{universityMB.showBtnUniversity}">
+                            <p:commandLink value="  " title="Eliminar universidad" styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cdUniversity_#{university.rutUniversity}.show();"/>
+                                
+                            <p:confirmDialog message="¿Está seguro que desea eliminar la universidad?"
+                                                 header="Confirmación de eliminación de universidad" severity="alert"
+                                                 widgetVar="cdUniversity_#{university.rutUniversity}" id="cdUniversity" closeOnEscape="true">
+                            <p:commandButton value="Si" actionListener="#{universityMB.deleteUniversity(university.rutUniversity)}"
+                                                     oncomplete="cdUniversity_#{university.rutUniversity}.hide()" ajax="false" />
+                            <p:commandButton value="No" onclick="cdUniversity_#{university.rutUniversity}.hide();" type="button" />
+                            </p:confirmDialog>
+                        </p:column>
+                    </p:dataTable>       
+                    <f:facet name="footer">
+                        <p:commandButton value="Agregar universidad" action="#{universityMB.addUniversity()}" rendered="#{universityMB.showBtnUniversity}"/>  
+                    </f:facet>
+                    </p:panelGrid>
+                    <p:contextMenu beforeShow="pcontext.show()" />
+                </h:form>
+                
+            </ui:define>
+        </ui:composition>       
+    </body>   
+</html>

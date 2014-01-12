@@ -10,7 +10,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author Nico
+ * @author Diego
  */
 @Local
 public interface AssignmentFacadeLocal {
@@ -26,13 +26,10 @@ public interface AssignmentFacadeLocal {
     List<Assignment> findAll();
 
     List<Assignment> findRange(int[] range);
+
+    int count();
     
     List<Assignment> findByRut(Object rut);
     
     Assignment findByCourseCode(Object courseCode);
-    
-    int count();
-    
-    
-    
 }

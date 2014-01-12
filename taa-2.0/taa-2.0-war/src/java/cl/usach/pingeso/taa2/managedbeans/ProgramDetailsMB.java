@@ -50,7 +50,7 @@ public class ProgramDetailsMB {
         }
         this.code = programSelect.getProgramCode();
         this.name = programSelect.getProgramName();
-        this.levels = programSelect.getLevels();
+        this.levels = programSelect.getLevels().shortValue();
     }
     
     public void backToPrograms() {

@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <body>
+        
+        <ui:composition template="./templates/newTemplate.xhtml">
+            
+            <ui:define name="titulo">
+                Detalle facultad/escuela
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                     <p:panelGrid columns="2" styleClass="centrar">
+                         <f:facet name="header">Datos facultad/escuela</f:facet>
+                         
+                         <p:outputLabel value="Nombre facultad"/>
+                         <p:outputLabel value="#{schoolDetailsMB.schoolName}"/>
+                         
+                         <p:outputLabel value="Universidad"/>
+                         <p:outputLabel value="#{schoolDetailsMB.university}"/>
+                         
+                         <p:outputLabel value="Dirección"/>
+                         <p:outputLabel value="#{schoolDetailsMB.schoolAdress}"/>
+                         
+                         <p:outputLabel value="Teléfono"/>
+                         <p:outputLabel value="#{schoolDetailsMB.schoolPhone}"/>
+                         
+                         <p:outputLabel value="E-mail"/>
+                         <p:outputLabel value="#{schoolDetailsMB.schoolEmail}"/>
+                         
+                         <p:outputLabel value="Tipo horario"/>
+                         <p:outputLabel value="#{schoolDetailsMB.timetable}"/>
+                         
+                         <p:outputLabel value="Carreras"/>
+                         <p:dataTable var="program" value="#{schoolDetailsMB.programsSchool}" paginator="true" paginatorAlwaysVisible="false" rows="10" rowKey="#{program.programCode}" paginatorPosition="bottom"
+                                 emptyMessage="No tiene carreras asignadas">
+                             <p:column id="programCode">  
+                                <h:outputText value="#{program.programCode}" />  
+                             </p:column>
+                             <p:column id="programName">  
+                                <h:outputText value="#{program.programName}" />  
+                             </p:column>  
+                        </p:dataTable>
+                        
+                         <f:facet name="footer">   
+                             <p:commandButton value="Volver" immediate="true" action="#{schoolDetailsMB.backToSchools()}"/>                         
+                         </f:facet>
+                     </p:panelGrid>                
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

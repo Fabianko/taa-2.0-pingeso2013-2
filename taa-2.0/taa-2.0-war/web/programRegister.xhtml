@@ -19,20 +19,25 @@
                          <f:facet name="header">Ingrese datos de la carrera</f:facet>
 
                          <p:outputLabel value="Código carrera" for="codeProgram"/>
-                         <p:inputText id="codeProgram" value="#{programRegisterMB.code}" required="true" requiredMessage="Código carrera es obligatorio.">
+                         <p:inputText size="35" maxlength="20" id="codeProgram" value="#{programRegisterMB.code}" required="true" requiredMessage="Código carrera es obligatorio.">
                              <f:validator validatorId="programCodeValidator"/>
                          </p:inputText>
 
                          <p:outputLabel value="Nombre carrera" for="nameProgram"/>
-                         <p:inputText id="nameProgram" value="#{programRegisterMB.name}" required="true" requiredMessage="Nombre carrera es obligatorio.">
+                         <p:inputText id="nameProgram" size="35" maxlength="100" value="#{programRegisterMB.name}" required="true" requiredMessage="Nombre carrera es obligatorio.">
                              <f:validator validatorId="programNameValidator"/>
                          </p:inputText>
                          
                          <p:outputLabel value="Duración (Semestres)" for="nLevels"/>
-                         <p:inputText id="nLevels" value="#{programRegisterMB.levels}" required="true" requiredMessage="Duración (Semestres) es obligatorio.">
+                         <p:inputText id="nLevels" size="35" maxlength="2" value="#{programRegisterMB.levels}" required="true" requiredMessage="Duración (Semestres) es obligatorio.">
                              <f:validator validatorId="levelsProgramValidator"></f:validator>
                          </p:inputText>
-                               
+                         
+                         <p:outputLabel value="Facultad/Universidad" for="schooluniversity"/>
+                         <p:selectOneMenu id="schooluniversity" style="width: 247px;" value="#{programRegisterMB.schoolUniversity}" required="true" requiredMessage="Facultad/Universidad es obligatorio.">
+                             <f:selectItems value="#{programRegisterMB.schoolUniversityOptions}"/>
+                         </p:selectOneMenu>
+                         
                          <f:facet name="footer">
                              <p:commandButton value="Guardar" ajax="false" action="#{programRegisterMB.programRegisterNow()}"/>
                              <p:commandButton immediate="true" value="Volver" action="#{programRegisterMB.backToPrograms()}"/>                         

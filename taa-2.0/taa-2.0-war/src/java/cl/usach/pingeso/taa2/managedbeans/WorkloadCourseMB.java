@@ -74,7 +74,7 @@ public class WorkloadCourseMB implements Serializable {
         }
         this.courseCode = courseSelect.getCourseCode();
         this.courseName = courseSelect.getCourseName();
-        this.Classroom = courseSelect.getClassroom();
+        this.Classroom = courseSelect.getMainClassroom();
     }
     
 
@@ -94,9 +94,9 @@ public class WorkloadCourseMB implements Serializable {
             Course newCourse = new Course();
             newCourse.setCourseCode(courseCode);
             newCourse.setCourseName(courseName);
-            newCourse.setClassroom(Classroom);
+            newCourse.setMainClassroom(Classroom);
             newCourse.setCourseState("1");
-            newCourse.setWorkload(workloadCreate());
+            //newCourse.setWorkload(workloadCreate());
             courseFacade.edit(newCourse);
             //saveCourse1(newCourse);
             General.viewMessage(FacesMessage.SEVERITY_INFO,

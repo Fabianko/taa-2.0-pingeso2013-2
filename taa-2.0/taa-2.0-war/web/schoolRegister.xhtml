@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      contentType="text/html">
+    
+    <body>
+         <ui:composition template="templates/newTemplate.xhtml">
+            <ui:define name="titulo">
+                Registrar facultad
+            </ui:define>
+            <ui:define name="content">
+                
+                <h:form>
+                     <p:panelGrid columns="2" styleClass="centrar">
+                         <f:facet name="header">Ingrese datos de la facultad</f:facet>
+
+                         <p:outputLabel value="Nombre" for="nombre"/>
+                         <p:inputText id="nombre" size="35" maxlength="50" value="#{schoolRegisterMB.schoolName}" required="true" requiredMessage="Nombre es obligatorio.">
+                         </p:inputText>
+                         
+                         <p:outputLabel value="Dirección" for="adress"/>
+                         <p:inputText id="adress" size="35" maxlength="100" value="#{schoolRegisterMB.schoolAdress}"/>
+
+                         <p:outputLabel value="Teléfono" for="phone"/>
+                         <p:inputText id="phone" size="35" maxlength="30" value="#{schoolRegisterMB.schoolPhone}"/>
+
+                         <p:outputLabel value="E-mail" for="email"/>
+                         <p:inputText id="email" size="35" maxlength="100" value="#{schoolRegisterMB.schoolEmail}">
+                             <f:validator validatorId="EmailValidatorUniversity"/>
+                         </p:inputText>
+                         
+                         <p:outputLabel value="Universidad" for="university"/>
+                         <p:selectOneMenu id="university" style="width: 247px;" value="#{schoolRegisterMB.universityRut}" required="true" requiredMessage="Universidad es obligatorio.">
+                             <f:selectItems value="#{schoolRegisterMB.universityOptions}"/>
+                         </p:selectOneMenu>
+                         
+                         <p:outputLabel value="Tipo horario" for="net"/>
+                         <p:selectOneMenu id="net" style="width: 247px;" value="#{schoolRegisterMB.timetableCode}">
+                             <f:selectItems value="#{schoolRegisterMB.timetableOptions}"/>
+                         </p:selectOneMenu>
+                         
+                         <f:facet name="footer">
+                             <p:commandButton value="Guardar" ajax="false" action="#{schoolRegisterMB.schoolRegisterNow()}"/>
+                             <p:commandButton immediate="true" value="Volver" action="#{schoolRegisterMB.backToSchools()}"/>                         
+                         </f:facet>
+                         
+                    </p:panelGrid>
+                </h:form>
+            </ui:define>
+        </ui:composition>       
+    </body>   
+</html>

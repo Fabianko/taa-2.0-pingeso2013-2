@@ -10,7 +10,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author Nico
+ * @author Diego
  */
 @Local
 public interface ProgramFacadeLocal {
@@ -28,6 +28,6 @@ public interface ProgramFacadeLocal {
     List<Program> findRange(int[] range);
 
     int count();
-
+    
     Program findByProgramName(Object name);
 }

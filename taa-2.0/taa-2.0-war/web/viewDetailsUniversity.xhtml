@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <body>
+        
+        <ui:composition template="./templates/newTemplate.xhtml">
+            
+            <ui:define name="titulo">
+                Detalle universidad
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                     <p:panelGrid columns="2" styleClass="centrar">
+                         <f:facet name="header">Datos universidad</f:facet>
+                         
+                         <p:outputLabel value="Rut universidad"/>
+                         <p:outputLabel value="#{universityDetailsMB.rutUniversity}"/>
+                         
+                         <p:outputLabel value="Nombre universidad"/>
+                         <p:outputLabel value="#{universityDetailsMB.nameUniversity}"/>
+                         
+                         <p:outputLabel value="Dirección casa central"/>
+                         <p:outputLabel value="#{universityDetailsMB.adressUniversity}"/>
+                         
+                         <p:outputLabel value="Teléfono"/>
+                         <p:outputLabel value="#{universityDetailsMB.phoneUniversity}"/>
+                         
+                         <p:outputLabel value="E-mail"/>
+                         <p:outputLabel value="#{universityDetailsMB.emailUniversity}"/>
+                         
+                         <p:outputLabel value="Facultades/escuelas"/>
+                         <p:dataTable var="school" value="#{universityDetailsMB.schoolsUniversity}" paginator="true" paginatorAlwaysVisible="false" rows="10" rowKey="#{school.schoolCode}" paginatorPosition="bottom"
+                                 emptyMessage="No tiene facultades/escuelas asignadas">
+                             <p:column id="schoolName">  
+                                <h:outputText value="#{school.schoolName}" />  
+                            </p:column>  
+                        </p:dataTable> 
+
+                         <f:facet name="footer">   
+                             <p:commandButton value="Volver" immediate="true" action="#{universityDetailsMB.backToUniversities()}"/>                         
+                         </f:facet>
+                     </p:panelGrid>                
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

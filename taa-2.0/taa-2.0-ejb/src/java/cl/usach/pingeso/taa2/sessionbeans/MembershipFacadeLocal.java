@@ -26,9 +26,9 @@ public interface MembershipFacadeLocal {
     List<Membership> findAll();
 
     List<Membership> findRange(int[] range);
-    
+
     int count();
     
-     Membership findByCourseCode(Object courseCode);
+    Membership findByCourseCode(Object courseCode);
     
 }

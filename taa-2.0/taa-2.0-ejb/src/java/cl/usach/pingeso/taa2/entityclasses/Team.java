@@ -8,11 +8,14 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -33,27 +36,30 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Team.findAll", query = "SELECT t FROM Team t"),
     @NamedQuery(name = "Team.findByTeamId", query = "SELECT t FROM Team t WHERE t.teamId = :teamId"),
-    @NamedQuery(name = "Team.findByCreationDate", query = "SELECT t FROM Team t WHERE t.creationDate = :creationDate"),
     @NamedQuery(name = "Team.findByTeamName", query = "SELECT t FROM Team t WHERE t.teamName = :teamName"),
+    @NamedQuery(name = "Team.findByCreationDate", query = "SELECT t FROM Team t WHERE t.creationDate = :creationDate"),
     @NamedQuery(name = "Team.findByTeamState", query = "SELECT t FROM Team t WHERE t.teamState = :teamState")})
 public class Team implements Serializable {
+    @JoinColumn(name = "COURSE_CODE", referencedColumnName = "COURSE_CODE")
+    @ManyToOne
+    private Course courseCode;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "team")
+    private Collection<StudentTeam> studentTeamCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "TEAM_ID")
     private Long teamId;
+    @Size(max = 50)
+    @Column(name = "TEAM_NAME")
+    private String teamName;
     @Column(name = "CREATION_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
-    @Size(max = 255)
-    @Column(name = "TEAM_NAME")
-    private String teamName;
-    @Size(max = 255)
+    @Size(max = 1)
     @Column(name = "TEAM_STATE")
     private String teamState;
-    @OneToMany(mappedBy = "teamId")
-    private Collection<Student> studentCollection;
 
     public Team() {
     }
@@ -70,14 +76,6 @@ public class Team implements Serializable {
         this.teamId = teamId;
     }
 
-    public Date getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
-    }
-
     public String getTeamName() {
         return teamName;
     }
@@ -86,21 +84,20 @@ public class Team implements Serializable {
         this.teamName = teamName;
     }
 
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
     public String getTeamState() {
         return teamState;
     }
 
     public void setTeamState(String teamState) {
         this.teamState = teamState;
-    }
-
-    @XmlTransient
-    public Collection<Student> getStudentCollection() {
-        return studentCollection;
-    }
-
-    public void setStudentCollection(Collection<Student> studentCollection) {
-        this.studentCollection = studentCollection;
     }
 
     @Override
@@ -126,6 +123,23 @@ public class Team implements Serializable {
     @Override
     public String toString() {
         return "cl.usach.pingeso.taa2.entityclasses.Team[ teamId=" + teamId + " ]";
+    }
+
+    public Course getCourseCode() {
+        return courseCode;
+    }
+
+    public void setCourseCode(Course courseCode) {
+        this.courseCode = courseCode;
+    }
+
+    @XmlTransient
+    public Collection<StudentTeam> getStudentTeamCollection() {
+        return studentTeamCollection;
+    }
+
+    public void setStudentTeamCollection(Collection<StudentTeam> studentTeamCollection) {
+        this.studentTeamCollection = studentTeamCollection;
     }
     
 }

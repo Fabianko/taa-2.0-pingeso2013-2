@@ -11,7 +11,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author Nico
+ * @author Diego
  */
 @Local
 public interface StudentFacadeLocal {
@@ -27,7 +27,7 @@ public interface StudentFacadeLocal {
     List<Student> findAll();
 
     List<Student> findRange(int[] range);
-    
+
     List<Student> findByCourse(Object courseCode);
     
     List<Student> findByCourseComplement(Object courseCode);

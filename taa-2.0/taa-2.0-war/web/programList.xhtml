@@ -42,19 +42,26 @@
                                 headerText="Duración (Semestres)" 
                                 filterMatchMode="contains">  
                             <h:outputText value="#{anyProgram.levels}" />  
-                        </p:column> 
+                        </p:column>
+                        
+                        <p:column id="universityName" filterBy="#{anyProgram.schoolCode.rutUniversity.universityName}"   
+                                headerText="Universidad" 
+                                filterOptions="#{programMB.schoolUniversityOptions}"  
+                                filterMatchMode="exact">  
+                            <h:outputText value="#{anyProgram.schoolCode.rutUniversity.universityName}" />  
+                        </p:column>
  
                         <p:column headerText="" >
                             <p:commandLink value="  " title="Ver Datos de carrera" styleClass="ui-btn ui-icon-shadow ui-icon-search ui-icon" action="#{programMB.viewDetailsProgram(anyProgram.programCode)}">
                             </p:commandLink>
                         </p:column>
                         
-                        <p:column headerText=""  rendered="#{courseMB.showBtnAdd}">
+                        <p:column headerText=""  rendered="#{programMB.showBtnAdd}">
                             <p:commandLink value="  " title="Modificar esta Carrera" styleClass=" ui-btn ui-icon-shadow ui-icon-pencil ui-icon" action="#{programMB.edit(anyProgram.programCode)}">
                             </p:commandLink>
                         </p:column>
 
-                        <p:column headerText="" rendered="#{courseMB.showBtnAdd}">
+                        <p:column headerText="" rendered="#{programMB.showBtnAdd}">
                             <p:commandLink value="  " title="Eliminar esta carrera" styleClass=" ui-btn ui-icon-shadow ui-icon-trash ui-icon" onclick="cd_#{anyProgram.programCode}.show();" />
                                 
                             <p:confirmDialog message="¿Está seguro que desea eliminar la carrera?"
@@ -68,7 +75,7 @@
                         </p:column>
                     </p:dataTable>       
                     <f:facet name="footer">
-                        <p:commandButton value="Agregar carrera" action="#{programMB.add()}" rendered="#{courseMB.showBtnAdd}"/>  
+                        <p:commandButton value="Agregar carrera" action="#{programMB.add()}" rendered="#{programMB.showBtnAdd}"/>  
                     </f:facet>
                     </p:panelGrid>
                     <p:contextMenu beforeShow="pcontext.show()" />

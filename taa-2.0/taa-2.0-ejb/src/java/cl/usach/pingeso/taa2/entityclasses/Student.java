@@ -34,27 +34,30 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Student.findAll", query = "SELECT s FROM Student s"),
     @NamedQuery(name = "Student.findByRut", query = "SELECT s FROM Student s WHERE s.rut = :rut")})
 public class Student implements Serializable {
-    @Size(max = 30)
-    @Column(name = "ROL_TEAM")
-    private String rolTeam;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
+    private Collection<Membership> membershipCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
+    private Collection<Attendance> attendanceCollection;
+    @OneToMany(mappedBy = "rut")
+    private Collection<Photo> photoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
+    private Collection<StudentTeam> studentTeamCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 255)
+    @Size(min = 1, max = 13)
     @Column(name = "RUT")
     private String rut;
-    @JoinColumn(name = "TEAM_ID", referencedColumnName = "TEAM_ID")
-    @ManyToOne
-    private Team teamId;
     @JoinColumn(name = "RUT", referencedColumnName = "RUT", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private User user;
     @JoinColumn(name = "PROGRAM_CODE", referencedColumnName = "PROGRAM_CODE")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Program programCode;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
-    private Collection<Membership> membershipCollection;
+    @JoinColumn(name = "RUT_UNIVERSITY", referencedColumnName = "RUT_UNIVERSITY")
+    @ManyToOne
+    private University rutUniversity;
 
     public Student() {
     }
@@ -69,14 +72,6 @@ public class Student implements Serializable {
 
     public void setRut(String rut) {
         this.rut = rut;
-    }
-
-    public Team getTeamId() {
-        return teamId;
-    }
-
-    public void setTeamId(Team teamId) {
-        this.teamId = teamId;
     }
 
     public User getUser() {
@@ -95,13 +90,12 @@ public class Student implements Serializable {
         this.programCode = programCode;
     }
 
-    @XmlTransient
-    public Collection<Membership> getMembershipCollection() {
-        return membershipCollection;
+    public University getRutUniversity() {
+        return rutUniversity;
     }
 
-    public void setMembershipCollection(Collection<Membership> membershipCollection) {
-        this.membershipCollection = membershipCollection;
+    public void setRutUniversity(University rutUniversity) {
+        this.rutUniversity = rutUniversity;
     }
 
     @Override
@@ -129,12 +123,40 @@ public class Student implements Serializable {
         return "cl.usach.pingeso.taa2.entityclasses.Student[ rut=" + rut + " ]";
     }
 
-    public String getRolTeam() {
-        return rolTeam;
+    @XmlTransient
+    public Collection<Membership> getMembershipCollection() {
+        return membershipCollection;
     }
 
-    public void setRolTeam(String rolTeam) {
-        this.rolTeam = rolTeam;
+    public void setMembershipCollection(Collection<Membership> membershipCollection) {
+        this.membershipCollection = membershipCollection;
+    }
+
+    @XmlTransient
+    public Collection<Attendance> getAttendanceCollection() {
+        return attendanceCollection;
+    }
+
+    public void setAttendanceCollection(Collection<Attendance> attendanceCollection) {
+        this.attendanceCollection = attendanceCollection;
+    }
+
+    @XmlTransient
+    public Collection<Photo> getPhotoCollection() {
+        return photoCollection;
+    }
+
+    public void setPhotoCollection(Collection<Photo> photoCollection) {
+        this.photoCollection = photoCollection;
+    }
+
+    @XmlTransient
+    public Collection<StudentTeam> getStudentTeamCollection() {
+        return studentTeamCollection;
+    }
+
+    public void setStudentTeamCollection(Collection<StudentTeam> studentTeamCollection) {
+        this.studentTeamCollection = studentTeamCollection;
     }
     
 }

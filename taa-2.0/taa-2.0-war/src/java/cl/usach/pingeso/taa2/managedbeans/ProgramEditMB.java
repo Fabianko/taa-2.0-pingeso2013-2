@@ -57,7 +57,7 @@ public class ProgramEditMB {
             Program newProgram = new Program();
             newProgram.setProgramCode(programCode);
             newProgram.setProgramName(programName);
-            newProgram.setLevels(Short.parseShort(levels));
+            newProgram.setLevels(Integer.parseInt(levels));
             newProgram.setProgramState("1");
             programFacade.edit(newProgram);
             General.viewMessage(FacesMessage.SEVERITY_INFO,

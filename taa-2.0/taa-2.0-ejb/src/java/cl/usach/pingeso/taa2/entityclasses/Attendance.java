@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -35,6 +36,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Attendance.findByAttendanceState", query = "SELECT a FROM Attendance a WHERE a.attendanceState = :attendanceState"),
     @NamedQuery(name = "Attendance.removeAll", query = "DELETE FROM Attendance a WHERE a.attendancePK.attendanceDate = :attendanceDate AND a.attendancePK.courseCode = :courseCode")})
 public class Attendance implements Serializable {
+    @JoinColumns({
+        @JoinColumn(name = "TIMETABLE_CODE", referencedColumnName = "TIMETABLE_CODE"),
+        @JoinColumn(name = "BLOCK_NUMBER", referencedColumnName = "BLOCK_NUMBER"),
+        @JoinColumn(name = "BLOCK_DAY", referencedColumnName = "BLOCK_DAY")})
+    @ManyToOne
+    private Block block;
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected AttendancePK attendancePK;
@@ -125,6 +132,14 @@ public class Attendance implements Serializable {
     @Override
     public String toString() {
         return "cl.usach.pingeso.taa2.entityclasses.Attendance[ attendancePK=" + attendancePK + " ]";
+    }
+
+    public Block getBlock() {
+        return block;
+    }
+
+    public void setBlock(Block block) {
+        this.block = block;
     }
     
 }

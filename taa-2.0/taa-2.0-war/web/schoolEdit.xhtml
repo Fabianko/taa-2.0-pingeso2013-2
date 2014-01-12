@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <body>
+        
+        <ui:composition template="./templates/newTemplate.xhtml">
+            
+            <ui:define name="titulo">
+                Modificar facultad/escuela
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                     <p:panelGrid columns="2" styleClass="centrar">
+                         <f:facet name="header">Datos facultad/escuela</f:facet>
+                         
+                         <p:outputLabel value="Nombre facultad"/>
+                         <p:inputText size="35" maxlength="50" disabled="true" readonly="true" value="#{editSchoolMB.schoolName}"/>
+                         
+                         <p:outputLabel value="Universidad" for="university"/>
+                         <p:selectOneMenu style="width: 247px;" id="university" value="#{editSchoolMB.universityCode}" required="true" requiredMessage="Universidad es obligatorio.">
+                            <f:selectItems value="#{editSchoolMB.universityOptions}"/>
+                         </p:selectOneMenu>
+                         
+                         <p:outputLabel value="Dirección"/>
+                         <p:inputText size="35" maxlength="100" value="#{editSchoolMB.schoolAdress}"/>
+                         
+                         <p:outputLabel value="Teléfono"/>
+                         <p:inputText size="35" maxlength="30" value="#{editSchoolMB.schoolPhone}"/>
+                         
+                         <p:outputLabel value="E-mail"/>
+                         <p:inputText size="35" maxlength="100" value="#{editSchoolMB.schoolEmail}">
+                             <f:validator validatorId="EmailValidatorUniversity"></f:validator>
+                         </p:inputText>
+                         
+                         <p:outputLabel value="Tipo horario" for="timetable"/>
+                         <p:selectOneMenu style="width: 247px;" id="timetable" value="#{editSchoolMB.timetableCode}">
+                            <f:selectItems value="#{editSchoolMB.timetableOptions}"/>
+                         </p:selectOneMenu>
+                         
+                         <f:facet name="footer">   
+                             <p:commandButton value="Guardar" ajax="false" action="#{editSchoolMB.saveSchool()}"/>
+                             <p:commandButton value="Volver" immediate="true" action="#{editSchoolMB.backToSchools()}"/>                         
+                         
+                         </f:facet>
+                     </p:panelGrid>                
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

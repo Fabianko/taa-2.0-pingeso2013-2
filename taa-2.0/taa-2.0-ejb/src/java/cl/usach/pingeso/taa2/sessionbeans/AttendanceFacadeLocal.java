@@ -11,7 +11,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author Nico
+ * @author Diego
  */
 @Local
 public interface AttendanceFacadeLocal {
@@ -41,4 +41,5 @@ public interface AttendanceFacadeLocal {
     List<Date> findAllDatesByCourse(String course);
     
     int removeAll(Date attendanceDate, String courseCode);
+    
 }

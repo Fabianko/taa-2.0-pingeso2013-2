@@ -5,13 +5,17 @@
 package cl.usach.pingeso.taa2.managedbeans;
 
 import cl.usach.pingeso.taa2.entityclasses.Program;
+import cl.usach.pingeso.taa2.entityclasses.School;
 import cl.usach.pingeso.taa2.sessionbeans.ProgramFacadeLocal;
+import cl.usach.pingeso.taa2.sessionbeans.SchoolFacadeLocal;
 import cl.usach.pingeso.taa2.utils.General;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.model.SelectItem;
 
 /**
  *
@@ -20,17 +24,22 @@ import javax.faces.application.FacesMessage;
 @Named(value = "programRegisterMB")
 @RequestScoped
 public class ProgramRegisterMB {
+    @EJB
+    private SchoolFacadeLocal schoolFacade;
     @EJB 
     private ProgramFacadeLocal programFacade;
     private String code;
     private String name;
     private String levels;
+    private String schoolUniversity;
+    private SelectItem[] schoolUniversityOptions;
     
     public ProgramRegisterMB() {
     }
     
     @PostConstruct
     public void init() {
+        this.schoolUniversityOptions = createFilterOptions();
     }
     
     public void backToPrograms() {
@@ -44,8 +53,9 @@ public class ProgramRegisterMB {
             Program newProgram = new Program();
             newProgram.setProgramCode(code);
             newProgram.setProgramName(name);
-            newProgram.setLevels(Short.parseShort(levels));
+            newProgram.setLevels(Integer.parseInt(levels));
             newProgram.setProgramState("1");
+            newProgram.setSchoolCode(schoolFacade.find(schoolUniversity));
             if(programFacade.find(code) != null)
             {
                 General.viewMessage(FacesMessage.SEVERITY_ERROR,
@@ -103,5 +113,31 @@ public class ProgramRegisterMB {
 
     public void setLevels(String levels) {
         this.levels = levels;
+    }
+    
+    private SelectItem[] createFilterOptions()  { 
+        List<School> schools = schoolFacade.findAll();
+        SelectItem[] options = new SelectItem[schools.size() + 1];  
+        options[0] = new SelectItem("", "Selecciona");  
+        for(int i = 0; i < schools.size(); i++) {  
+            options[i + 1] = new SelectItem(schools.get(i).getSchoolCode(), schools.get(i).getSchoolName().concat(" / ").concat(schools.get(i).getRutUniversity().getUniversityName()));  
+        }  
+        return options;  
+    }
+
+    public String getSchoolUniversity() {
+        return schoolUniversity;
+    }
+
+    public void setSchoolUniversity(String schoolUniversity) {
+        this.schoolUniversity = schoolUniversity;
+    }
+
+    public SelectItem[] getSchoolUniversityOptions() {
+        return schoolUniversityOptions;
+    }
+
+    public void setSchoolUniversityOptions(SelectItem[] schoolUniversityOptions) {
+        this.schoolUniversityOptions = schoolUniversityOptions;
     }
 }

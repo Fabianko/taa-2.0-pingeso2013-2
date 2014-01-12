@@ -16,7 +16,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Nico
+ * @author Diego
  */
 @Stateless
 public class CourseFacade extends AbstractFacade<Course> implements CourseFacadeLocal {
@@ -43,7 +43,8 @@ public class CourseFacade extends AbstractFacade<Course> implements CourseFacade
         catch (NoResultException nre) {
             return null;
         }
-        List<Course> courseList = new ArrayList(res.size());
+        List<Course> courseList;
+        courseList = new ArrayList(res.size());
         
         for(int i=0;i<res.size();i++)
         {
@@ -55,7 +56,8 @@ public class CourseFacade extends AbstractFacade<Course> implements CourseFacade
     
     @Override
     public Course findByCourseName(Object courseName) {
-        Query q0 = this.em.createNamedQuery("Course.findByCourseName");
+        Query q0;
+        q0 = this.em.createNamedQuery("Course.findByCourseName");
         q0.setParameter("courseName", courseName);
         Course res;
         try {

@@ -60,7 +60,7 @@ public class StudentTeamMB {
         }
         this.rut = studentSelect.getRut();
         this.fullName = studentSelect.getUser().getFirstName().concat(" ").concat(studentSelect.getUser().getPrimaryLastName()).concat(" ").concat(studentSelect.getUser().getSecondLastName());
-        this.rolCurrentStudent = studentSelect.getRolTeam();
+        //this.rolCurrentStudent = studentSelect.getRolTeam();
     }
     
     public void backToStudents() {
@@ -117,11 +117,11 @@ public class StudentTeamMB {
     public void teamStudentRegisterNow()
     {
         Student temp = studentFacade.find(rut);
-        temp.setTeamId(teamFacade.find(Long.parseLong(teamCurrentStudent)));
-        temp.setRolTeam(rolCurrentStudent);
+        //temp.setTeamId(teamFacade.find(Long.parseLong(teamCurrentStudent)));
+        //temp.setRolTeam(rolCurrentStudent);
         studentFacade.edit(temp);
-        /*General.viewMessage(FacesMessage.SEVERITY_INFO,
+        General.viewMessage(FacesMessage.SEVERITY_INFO,
             "Asignación de grupo y rol guardada satisfactoriamente !!!",
-            "Asignación de grupo y rol guardada satisfactoriamente !!!");*/
+            "Asignación de grupo y rol guardada satisfactoriamente !!!");
     }
 }

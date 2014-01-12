@@ -10,7 +10,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author Nico
+ * @author Diego
  */
 @Local
 public interface PhotoFacadeLocal {
@@ -30,4 +30,5 @@ public interface PhotoFacadeLocal {
     int count();
     
     List<Photo> findByRut(String rutStudent);
+    
 }

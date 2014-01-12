@@ -11,6 +11,9 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -30,31 +33,52 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Course.findAll", query = "SELECT c FROM Course c"),
     @NamedQuery(name = "Course.findByCourseCode", query = "SELECT c FROM Course c WHERE c.courseCode = :courseCode"),
-    @NamedQuery(name = "Course.findByClassroom", query = "SELECT c FROM Course c WHERE c.classroom = :classroom"),
     @NamedQuery(name = "Course.findByCourseName", query = "SELECT c FROM Course c WHERE c.courseName = :courseName"),
+    @NamedQuery(name = "Course.findByMainClassroom", query = "SELECT c FROM Course c WHERE c.mainClassroom = :mainClassroom"),
+    @NamedQuery(name = "Course.findByAttendanceRequired", query = "SELECT c FROM Course c WHERE c.attendanceRequired = :attendanceRequired"),
     @NamedQuery(name = "Course.findByCourseState", query = "SELECT c FROM Course c WHERE c.courseState = :courseState")})
 public class Course implements Serializable {
+    @JoinTable(name = "workload", joinColumns = {
+        @JoinColumn(name = "COURSE_CODE", referencedColumnName = "COURSE_CODE")}, inverseJoinColumns = {
+        @JoinColumn(name = "TIMETABLE_CODE", referencedColumnName = "TIMETABLE_CODE"),
+        @JoinColumn(name = "BLOCK_NUMBER", referencedColumnName = "BLOCK_NUMBER"),
+        @JoinColumn(name = "BLOCK_DAY", referencedColumnName = "BLOCK_DAY")})
+    @ManyToMany
+    private Collection<Block> blockCollection;
+    @JoinTable(name = "program_course", joinColumns = {
+        @JoinColumn(name = "COURSE_CODE", referencedColumnName = "COURSE_CODE")}, inverseJoinColumns = {
+        @JoinColumn(name = "PROGRAM_CODE", referencedColumnName = "PROGRAM_CODE")})
+    @ManyToMany
+    private Collection<Program> programCollection;
+    @OneToMany(mappedBy = "courseCode")
+    private Collection<CourseHistory> courseHistoryCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "course")
+    private Collection<Membership> membershipCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "course")
+    private Collection<Attendance> attendanceCollection;
+    @OneToMany(mappedBy = "courseCode")
+    private Collection<Team> teamCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "course")
+    private Collection<Assignment> assignmentCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 255)
+    @Size(min = 1, max = 20)
     @Column(name = "COURSE_CODE")
     private String courseCode;
-    @Size(max = 255)
-    @Column(name = "CLASSROOM")
-    private String classroom;
-    @Size(max = 255)
+    @Size(max = 50)
     @Column(name = "COURSE_NAME")
     private String courseName;
-    @Size(max = 255)
+    @Size(max = 10)
+    @Column(name = "MAIN_CLASSROOM")
+    private String mainClassroom;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "ATTENDANCE_REQUIRED")
+    private Float attendanceRequired;
+    @Size(max = 1)
     @Column(name = "COURSE_STATE")
-    private String courseState;    
-    @Size(max = 20)
-    @Column(name = "WORKLOAD")
-    private String workload;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "course")
-    private Collection<Membership> membershipCollection;
+    private String courseState;
 
     public Course() {
     }
@@ -63,29 +87,12 @@ public class Course implements Serializable {
         this.courseCode = courseCode;
     }
 
-    public String getWorkload() {
-        return workload;
-    }
-
-    public void setWorkload(String workload) {
-        this.workload = workload;
-    }
-
-    
     public String getCourseCode() {
         return courseCode;
     }
 
     public void setCourseCode(String courseCode) {
         this.courseCode = courseCode;
-    }
-
-    public String getClassroom() {
-        return classroom;
-    }
-
-    public void setClassroom(String classroom) {
-        this.classroom = classroom;
     }
 
     public String getCourseName() {
@@ -96,21 +103,28 @@ public class Course implements Serializable {
         this.courseName = courseName;
     }
 
+    public String getMainClassroom() {
+        return mainClassroom;
+    }
+
+    public void setMainClassroom(String mainClassroom) {
+        this.mainClassroom = mainClassroom;
+    }
+
+    public Float getAttendanceRequired() {
+        return attendanceRequired;
+    }
+
+    public void setAttendanceRequired(Float attendanceRequired) {
+        this.attendanceRequired = attendanceRequired;
+    }
+
     public String getCourseState() {
         return courseState;
     }
 
     public void setCourseState(String courseState) {
         this.courseState = courseState;
-    }
-
-    @XmlTransient
-    public Collection<Membership> getMembershipCollection() {
-        return membershipCollection;
-    }
-
-    public void setMembershipCollection(Collection<Membership> membershipCollection) {
-        this.membershipCollection = membershipCollection;
     }
 
     @Override
@@ -136,6 +150,69 @@ public class Course implements Serializable {
     @Override
     public String toString() {
         return "cl.usach.pingeso.taa2.entityclasses.Course[ courseCode=" + courseCode + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Block> getBlockCollection() {
+        return blockCollection;
+    }
+
+    public void setBlockCollection(Collection<Block> blockCollection) {
+        this.blockCollection = blockCollection;
+    }
+
+    @XmlTransient
+    public Collection<Program> getProgramCollection() {
+        return programCollection;
+    }
+
+    public void setProgramCollection(Collection<Program> programCollection) {
+        this.programCollection = programCollection;
+    }
+
+    @XmlTransient
+    public Collection<CourseHistory> getCourseHistoryCollection() {
+        return courseHistoryCollection;
+    }
+
+    public void setCourseHistoryCollection(Collection<CourseHistory> courseHistoryCollection) {
+        this.courseHistoryCollection = courseHistoryCollection;
+    }
+
+    @XmlTransient
+    public Collection<Membership> getMembershipCollection() {
+        return membershipCollection;
+    }
+
+    public void setMembershipCollection(Collection<Membership> membershipCollection) {
+        this.membershipCollection = membershipCollection;
+    }
+
+    @XmlTransient
+    public Collection<Attendance> getAttendanceCollection() {
+        return attendanceCollection;
+    }
+
+    public void setAttendanceCollection(Collection<Attendance> attendanceCollection) {
+        this.attendanceCollection = attendanceCollection;
+    }
+
+    @XmlTransient
+    public Collection<Team> getTeamCollection() {
+        return teamCollection;
+    }
+
+    public void setTeamCollection(Collection<Team> teamCollection) {
+        this.teamCollection = teamCollection;
+    }
+
+    @XmlTransient
+    public Collection<Assignment> getAssignmentCollection() {
+        return assignmentCollection;
+    }
+
+    public void setAssignmentCollection(Collection<Assignment> assignmentCollection) {
+        this.assignmentCollection = assignmentCollection;
     }
     
 }

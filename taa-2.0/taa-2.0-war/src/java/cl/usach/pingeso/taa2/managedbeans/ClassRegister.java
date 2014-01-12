@@ -71,7 +71,7 @@ public class ClassRegister {
             Course newCourse = new Course();
             newCourse.setCourseCode(code);
             newCourse.setCourseName(name);
-            newCourse.setClassroom(null);
+            newCourse.setMainClassroom(null);
             newCourse.setCourseState("1");
             if(courseFacade.find(code) != null)
             {
