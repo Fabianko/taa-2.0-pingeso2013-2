@@ -5,7 +5,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-    
+
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
@@ -23,7 +23,7 @@
             <title><ui:insert name="titulo">Toma Asistencia Alumnos</ui:insert></title>
         </f:facet>
     </h:head>
-
+    
     <h:body style="background-color: black;">
         <div id="top">
             <div class="span2 text-right" style="background-color:black; margin-bottom: 15px;">
@@ -45,15 +45,18 @@
                     </p:tieredMenu >
                 </h:form>
                 
-                <h:form rendered="#{request.isUserInRole('Administrador')}">
+                <h:form rendered="true">
+                <!--<h:form rendered="{request.isUserInRole('Administrador')}">-->
                     <p:button value="Home" href="/faces/index.xhtml"  style="width:185px; background-color: #009900; " icon="ui-icon-home"/>
                     <p:menu style="width:175px; background-color: #009900;"><p:submenu label="MENU"  icon="ui-icon-home"/> </p:menu>
                     <p:tieredMenu style="width:175px; background-color: #009900; margin-bottom: 200px;">
+                        <p:menuitem value="Universidades" url="/faces/universityList.xhtml" icon="ui-icon-note"/>
+                        <p:menuitem value="Facultades" url="/faces/schoolList.xhtml" icon="ui-icon-disk"/>
+                        <p:menuitem value="Carreras" url="/faces/programList.xhtml" icon="ui-icon-calendar"/>
                         <p:menuitem value="Cursos" url="/faces/classList.xhtml" icon="ui-icon-note"/>
                         <p:menuitem value="Estudiantes" url="/faces/studentList.xhtml" icon="ui-icon-person"/>
                         <p:menuitem value="Carga horaria" url="/faces/workloadTeacher.xhtml" icon="ui-icon-disk" />
                         <p:menuitem value="Profesores" url="/faces/teacherList.xhtml" icon="ui-icon-disk"/>
-                        <p:menuitem value="Carreras" url="/faces/programList.xhtml" icon="ui-icon-calendar"/>
                         <p:menuitem value="Grupos" url="/faces/teamList.xhtml" icon="ui-icon-image" style="margin-bottom: 120px;"/>
                     </p:tieredMenu >
                 </h:form>
@@ -67,7 +70,7 @@
                             <p:menuitem value="Cambiar contraseña" icon="ui-icon-contact" url="/faces/passwordChange.xhtml" />
                             <p:menuitem value="Cerrar Sesion" action="#{sessionValidator.logout()}" icon="ui-icon-close"/>   
                         </p:menuButton>
-                              <p:separator />                  <p:clock pattern="HH:mm:ss dd.MM.yyyy" mode="server" />  
+                        <p:separator style="width: 0px; color: black; visibility: hidden;" />                  <p:clock pattern="HH:mm:ss dd-MM-yyyy" mode="server" />  
                         
                     </ui:insert>
                    </h:form>     
